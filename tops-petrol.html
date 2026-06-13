@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOPS — Petrol Log</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:       #0a0f1a;
+            --panel:    #0f1826;
+            --card:     #111d2e;
+            --border:   #1a2d45;
+            --accent:   #00c6ff;
+            --gold:     #FFD700;
+            --green:    #00e676;
+            --red:      #ff3d57;
+            --orange:   #ff9800;
+            --text:     #cdd9e5;
+            --muted:    #607b96;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', monospace;
+            min-height: 100vh;
+        }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .topbar-brand { font-size: 1rem; font-weight: 700; letter-spacing: 2px; }
+        .topbar-brand .t1 { color: var(--accent); }
+        .topbar-brand .t2 { color: var(--gold); }
+        .topbar-tag {
+            background: #1a2d10;
+            color: var(--green);
+            border: 1px solid var(--green);
+            font-size: 0.58rem;
+            letter-spacing: 2px;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        .topbar-meta { font-size: 0.68rem; color: var(--muted); text-align: right; }
+        .topbar-meta strong { color: var(--text); }
+
+        .main { padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
+
+        .section-label {
+            font-size: 0.58rem;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 14px 16px;
+        }
+        .card-title {
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .card-title.gold   { color: var(--gold); }
+        .card-title.accent { color: var(--accent); }
+        .card-title.green  { color: var(--green); }
+
+        /* ── TWO COLUMN LAYOUT ── */
+        .two-col { display: grid; grid-template-columns: 360px 1fr; gap: 14px; align-items: start; }
+
+        /* ── FORMS ── */
+        .form-grid { display: grid; gap: 8px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .form-group { display: flex; flex-direction: column; gap: 4px; }
+        .form-group label {
+            font-size: 0.56rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .form-group input,
+        .form-group select {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 7px 10px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-family: inherit;
+            outline: none;
+            width: 100%;
+        }
+        .form-group input:focus,
+        .form-group select:focus { border-color: var(--accent); }
+        .form-group select option { background: var(--panel); }
+
+        .calc-preview {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 8px 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            font-size: 0.68rem;
+        }
+        .calc-preview .lbl { color: var(--muted); }
+        .calc-preview .val { font-weight: 700; color: var(--gold); text-align: right; }
+        .calc-preview .val.green { color: var(--green); }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 9px 0;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            width: 100%;
+            transition: background .2s;
+        }
+        .btn-primary:hover { background: var(--green); }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all .2s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--red);
+            border: 1px solid #3d0010;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.58rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all .2s;
+        }
+        .btn-danger:hover { background: #3d0010; }
+
+        /* ── OFFICER RATES TABLE ── */
+        .rates-table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.68rem;
+        }
+        thead tr { border-bottom: 1px solid var(--border); }
+        thead th {
+            padding: 6px 8px;
+            text-align: left;
+            font-size: 0.56rem;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        tbody tr { border-bottom: 1px solid rgba(26,45,69,0.5); }
+        tbody tr:hover { background: var(--panel); }
+        tbody td { padding: 7px 8px; }
+        tbody td:last-child { text-align: right; }
+        .td-id    { color: var(--accent); font-weight: 700; }
+        .td-name  { color: var(--text); }
+        .td-rate  { color: var(--gold); font-weight: 700; }
+        .td-km    { color: var(--text); }
+        .td-payout{ color: var(--green); font-weight: 700; }
+        .td-date  { color: var(--muted); font-size: 0.62rem; }
+        .td-actions { display: flex; justify-content: flex-end; gap: 4px; }
+
+        /* ── SUMMARY STRIP ── */
+        .summary-strip {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        .summary-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 10px 12px;
+        }
+        .summary-card .s-lbl {
+            font-size: 0.56rem;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .summary-card .s-val {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .s-val.gold   { color: var(--gold); }
+        .s-val.green  { color: var(--green); }
+        .s-val.accent { color: var(--accent); }
+        .s-val.orange { color: var(--orange); }
+
+        /* ── DATE FILTER ── */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .filter-bar input,
+        .filter-bar select {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-family: inherit;
+            outline: none;
+        }
+        .filter-bar input:focus,
+        .filter-bar select:focus { border-color: var(--accent); }
+        .filter-bar label { font-size: 0.58rem; color: var(--muted); letter-spacing: 1px; }
+
+        /* ── ISOLATED BADGE ── */
+        .isolated-notice {
+            background: #0d1f0d;
+            border: 1px solid #1a3d1a;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 0.62rem;
+            color: #5a9a5a;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .isolated-notice::before {
+            content: "⬡";
+            color: var(--green);
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 24px;
+            color: var(--muted);
+            font-size: 0.68rem;
+            letter-spacing: 1px;
+        }
+
+        #live-clock { color: var(--accent); font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>
+        <div class="topbar-brand">
+            <span class="t1">TOPS</span> <span class="t2">PETROL LOG</span>
+        </div>
+        <div style="font-size:0.6rem;color:var(--muted);margin-top:2px;letter-spacing:1px;">
+            MANUAL · PHOTO-BASED · ISOLATED FROM CRM_DB
+        </div>
+    </div>
+    <div class="topbar-tag">PETROL_LOG MODULE — STANDALONE</div>
+    <div class="topbar-meta">
+        <strong id="live-clock">--:--:--</strong><br>
+        NOT LINKED TO UNIT_MASTER OR REMARKS_LOG
+    </div>
+</div>
+
+<div class="main">
+
+    <!-- Isolation notice -->
+    <div class="isolated-notice">
+        This module is strictly isolated from TOPS_CRM_DB. It does not read or write to Unit_Master or Remarks_Log. CRM speed is unaffected.
+    </div>
+
+    <!-- ── SUMMARY STRIP ── -->
+    <div>
+        <div class="section-label">TODAY'S SUMMARY</div>
+        <div class="summary-strip">
+            <div class="summary-card">
+                <div class="s-lbl">Total Entries Today</div>
+                <div class="s-val accent" id="sum-entries">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-lbl">Total KM Today</div>
+                <div class="s-val orange" id="sum-km">0 km</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-lbl">Total Payout Today</div>
+                <div class="s-val green" id="sum-payout">₹ 0.00</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-lbl">Officers on Duty</div>
+                <div class="s-val accent" id="sum-officers">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-lbl">Month Payout</div>
+                <div class="s-val gold" id="sum-month">₹ 0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── TWO COLUMN: ENTRY FORM + LOG TABLE ── -->
+    <div class="two-col">
+
+        <!-- LEFT: Entry Form -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+
+            <!-- PETROL LOG ENTRY -->
+            <div class="card">
+                <div class="card-title accent">PETROL LOG — DAILY ENTRY</div>
+                <div class="form-grid">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="entry-date">
+                        </div>
+                        <div class="form-group">
+                            <label>Officer ID</label>
+                            <select id="entry-officer">
+                                <option value="">— Select Officer —</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start KM (Photo Verified)</label>
+                            <input type="number" id="entry-start" placeholder="e.g. 15000" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>End KM (Photo Verified)</label>
+                            <input type="number" id="entry-end" placeholder="e.g. 15050" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Auto-calc preview -->
+                    <div class="calc-preview">
+                        <span class="lbl">Total KM</span>
+                        <span class="val" id="preview-km">—</span>
+                        <span class="lbl">Rate / KM</span>
+                        <span class="val" id="preview-rate">—</span>
+                        <span class="lbl">Total Payout</span>
+                        <span class="val green" id="preview-payout">—</span>
+                        <span class="lbl">Officer</span>
+                        <span class="val" id="preview-name" style="color:var(--text);font-weight:400;">—</span>
+                    </div>
+
+                    <button class="btn-primary" onclick="addEntry()">LOG ENTRY</button>
+                </div>
+            </div>
+
+            <!-- OFFICER RATES (Master Setup) -->
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <div class="card-title gold" style="margin-bottom:0;">OFFICER_RATES — MASTER</div>
+                    <button class="btn-ghost" onclick="toggleRatesForm()">+ ADD OFFICER</button>
+                </div>
+
+                <!-- Add Officer Form (hidden by default) -->
+                <div id="rates-form" style="display:none;margin-bottom:10px;">
+                    <div class="form-row-3" style="margin-bottom:8px;">
+                        <div class="form-group">
+                            <label>Officer ID</label>
+                            <input type="text" id="rate-id" placeholder="e.g. ID14">
+                        </div>
+                        <div class="form-group">
+                            <label>Officer Name</label>
+                            <input type="text" id="rate-name" placeholder="e.g. Priya">
+                        </div>
+                        <div class="form-group">
+                            <label>Rate Per KM (₹)</label>
+                            <input type="number" id="rate-value" placeholder="e.g. 2.00" step="0.01" min="0">
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <button class="btn-primary" onclick="addOfficer()">SAVE OFFICER</button>
+                        <button class="btn-ghost" onclick="toggleRatesForm()">CANCEL</button>
+                    </div>
+                </div>
+
+                <div class="rates-table-wrap">
+                    <table id="rates-table">
+                        <thead>
+                            <tr>
+                                <th>Officer ID</th>
+                                <th>Officer Name</th>
+                                <th style="text-align:right;">Rate/KM (₹)</th>
+                                <th style="text-align:right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rates-tbody">
+                            <tr><td colspan="4" class="empty-state">No officers added yet.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div><!-- /left -->
+
+        <!-- RIGHT: Log Table -->
+        <div class="card" style="overflow:hidden;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                <div class="card-title green" style="margin-bottom:0;">PETROL_LOG — ALL ENTRIES</div>
+                <div class="filter-bar">
+                    <label>Filter:</label>
+                    <input type="date" id="filter-date" onchange="renderLog()">
+                    <select id="filter-officer" onchange="renderLog()">
+                        <option value="">All Officers</option>
+                    </select>
+                    <button class="btn-ghost" onclick="clearFilters()">CLEAR</button>
+                    <button class="btn-ghost" onclick="exportCSV()">EXPORT CSV</button>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table id="log-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Officer ID</th>
+                            <th>Officer Name</th>
+                            <th style="text-align:right;">Start KM</th>
+                            <th style="text-align:right;">End KM</th>
+                            <th style="text-align:right;">Total KM</th>
+                            <th style="text-align:right;">Payout (₹)</th>
+                            <th style="text-align:right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="log-tbody">
+                        <tr><td colspan="8" class="empty-state">No entries yet. Add your first entry.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /two-col -->
+
+</div><!-- /main -->
+
+<script>
+    // ── DATA STORE (localStorage — isolated key prefix: tops_petrol_) ──
+    const RATES_KEY = 'tops_petrol_officer_rates';
+    const LOG_KEY   = 'tops_petrol_log';
+
+    function loadRates() {
+        return JSON.parse(localStorage.getItem(RATES_KEY) || '[]');
+    }
+    function saveRates(data) {
+        localStorage.setItem(RATES_KEY, JSON.stringify(data));
+    }
+    function loadLog() {
+        return JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
+    }
+    function saveLog(data) {
+        localStorage.setItem(LOG_KEY, JSON.stringify(data));
+    }
+
+    // ── INIT ──
+    function init() {
+        // Seed default officers if empty
+        if (loadRates().length === 0) {
+            saveRates([
+                { id: 'ID11', name: 'Amit',  rate: 2.00 },
+                { id: 'ID12', name: 'Rahul', rate: 1.50 },
+                { id: 'ID13', name: 'Vikas', rate: 2.50 },
+            ]);
+        }
+        // Default date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('entry-date').value = today;
+
+        renderRates();
+        renderLog();
+        renderSummary();
+        populateOfficerSelects();
+        startClock();
+    }
+
+    // ── LIVE CLOCK ──
+    function startClock() {
+        function tick() {
+            document.getElementById('live-clock').textContent =
+                new Date().toLocaleTimeString('en-IN', { hour12: false });
+        }
+        tick();
+        setInterval(tick, 1000);
+    }
+
+    // ── OFFICER RATES ──
+    function toggleRatesForm() {
+        const f = document.getElementById('rates-form');
+        f.style.display = f.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function addOfficer() {
+        const id    = document.getElementById('rate-id').value.trim().toUpperCase();
+        const name  = document.getElementById('rate-name').value.trim();
+        const rate  = parseFloat(document.getElementById('rate-value').value);
+
+        if (!id || !name || isNaN(rate) || rate <= 0) {
+            alert('Please fill all officer fields correctly.'); return;
+        }
+
+        const rates = loadRates();
+        if (rates.find(r => r.id === id)) {
+            alert('Officer ID already exists. Use a different ID.'); return;
+        }
+
+        rates.push({ id, name, rate });
+        saveRates(rates);
+
+        document.getElementById('rate-id').value    = '';
+        document.getElementById('rate-name').value  = '';
+        document.getElementById('rate-value').value = '';
+        toggleRatesForm();
+
+        renderRates();
+        populateOfficerSelects();
+    }
+
+    function deleteOfficer(id) {
+        if (!confirm('Delete officer ' + id + '? Their log entries will remain.')) return;
+        saveRates(loadRates().filter(r => r.id !== id));
+        renderRates();
+        populateOfficerSelects();
+    }
+
+    function renderRates() {
+        const rates = loadRates();
+        const tbody = document.getElementById('rates-tbody');
+        if (rates.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No officers. Add one above.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = rates.map(r => `
+            <tr>
+                <td class="td-id">${r.id}</td>
+                <td class="td-name">${r.name}</td>
+                <td class="td-rate">₹ ${r.rate.toFixed(2)}</td>
+                <td><div class="td-actions">
+                    <button class="btn-danger" onclick="deleteOfficer('${r.id}')">DEL</button>
+                </div></td>
+            </tr>`).join('');
+    }
+
+    // ── POPULATE SELECTS ──
+    function populateOfficerSelects() {
+        const rates = loadRates();
+        const opts  = '<option value="">— Select Officer —</option>' +
+            rates.map(r => `<option value="${r.id}">${r.id} — ${r.name}</option>`).join('');
+        const filterOpts = '<option value="">All Officers</option>' +
+            rates.map(r => `<option value="${r.id}">${r.id} — ${r.name}</option>`).join('');
+
+        document.getElementById('entry-officer').innerHTML = opts;
+        document.getElementById('filter-officer').innerHTML = filterOpts;
+    }
+
+    // ── AUTO-CALC PREVIEW ──
+    function recalcPreview() {
+        const officerId = document.getElementById('entry-officer').value;
+        const start     = parseFloat(document.getElementById('entry-start').value);
+        const end       = parseFloat(document.getElementById('entry-end').value);
+
+        const rates   = loadRates();
+        const officer = rates.find(r => r.id === officerId);
+
+        if (!officer) {
+            clearPreview(); return;
+        }
+        document.getElementById('preview-name').textContent  = officer.name;
+        document.getElementById('preview-rate').textContent  = '₹ ' + officer.rate.toFixed(2);
+
+        if (!isNaN(start) && !isNaN(end) && end > start) {
+            const km     = end - start;
+            const payout = km * officer.rate;
+            document.getElementById('preview-km').textContent     = km + ' km';
+            document.getElementById('preview-payout').textContent = '₹ ' + payout.toFixed(2);
+        } else {
+            document.getElementById('preview-km').textContent     = '—';
+            document.getElementById('preview-payout').textContent = '—';
+        }
+    }
+
+    function clearPreview() {
+        ['preview-km','preview-rate','preview-payout','preview-name'].forEach(id => {
+            document.getElementById(id).textContent = '—';
+        });
+    }
+
+    document.getElementById('entry-officer').addEventListener('change', recalcPreview);
+    document.getElementById('entry-start').addEventListener('input', recalcPreview);
+    document.getElementById('entry-end').addEventListener('input', recalcPreview);
+
+    // ── ADD ENTRY ──
+    function addEntry() {
+        const date      = document.getElementById('entry-date').value;
+        const officerId = document.getElementById('entry-officer').value;
+        const start     = parseFloat(document.getElementById('entry-start').value);
+        const end       = parseFloat(document.getElementById('entry-end').value);
+
+        if (!date)      { alert('Please select a date.'); return; }
+        if (!officerId) { alert('Please select an officer.'); return; }
+        if (isNaN(start) || start < 0) { alert('Enter a valid Start KM.'); return; }
+        if (isNaN(end)   || end <= start) { alert('End KM must be greater than Start KM.'); return; }
+
+        const rates   = loadRates();
+        const officer = rates.find(r => r.id === officerId);
+        if (!officer) { alert('Officer not found in rates master.'); return; }
+
+        const km     = end - start;
+        const payout = km * officer.rate;
+
+        const log  = loadLog();
+        const entry = {
+            id:         Date.now(),
+            date,
+            officerId,
+            officerName: officer.name,
+            rate:        officer.rate,
+            startKm:     start,
+            endKm:       end,
+            totalKm:     km,
+            payout,
+        };
+        log.unshift(entry);
+        saveLog(log);
+
+        // Reset entry fields
+        document.getElementById('entry-start').value   = '';
+        document.getElementById('entry-end').value     = '';
+        document.getElementById('entry-officer').value = '';
+        clearPreview();
+
+        renderLog();
+        renderSummary();
+    }
+
+    // ── RENDER LOG ──
+    function renderLog() {
+        let log  = loadLog();
+        const fd = document.getElementById('filter-date').value;
+        const fo = document.getElementById('filter-officer').value;
+
+        if (fd) log = log.filter(e => e.date === fd);
+        if (fo) log = log.filter(e => e.officerId === fo);
+
+        const tbody = document.getElementById('log-tbody');
+        if (log.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No entries match the filter.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = log.map(e => `
+            <tr>
+                <td class="td-date">${formatDate(e.date)}</td>
+                <td class="td-id">${e.officerId}</td>
+                <td class="td-name">${e.officerName}</td>
+                <td class="td-km" style="text-align:right;">${e.startKm.toLocaleString()}</td>
+                <td class="td-km" style="text-align:right;">${e.endKm.toLocaleString()}</td>
+                <td class="td-km" style="text-align:right;color:var(--orange);font-weight:700;">${e.totalKm}</td>
+                <td class="td-payout">₹ ${e.payout.toFixed(2)}</td>
+                <td><div class="td-actions">
+                    <button class="btn-danger" onclick="deleteEntry(${e.id})">DEL</button>
+                </div></td>
+            </tr>`).join('');
+    }
+
+    function deleteEntry(id) {
+        if (!confirm('Delete this log entry?')) return;
+        saveLog(loadLog().filter(e => e.id !== id));
+        renderLog();
+        renderSummary();
+    }
+
+    // ── SUMMARY ──
+    function renderSummary() {
+        const log   = loadLog();
+        const today = new Date().toISOString().split('T')[0];
+        const month = today.slice(0, 7);
+
+        const todayEntries  = log.filter(e => e.date === today);
+        const monthEntries  = log.filter(e => e.date.startsWith(month));
+
+        const totalKm     = todayEntries.reduce((s, e) => s + e.totalKm, 0);
+        const totalPayout = todayEntries.reduce((s, e) => s + e.payout, 0);
+        const monthPayout = monthEntries.reduce((s, e) => s + e.payout, 0);
+        const officers    = new Set(todayEntries.map(e => e.officerId)).size;
+
+        document.getElementById('sum-entries').textContent  = todayEntries.length;
+        document.getElementById('sum-km').textContent       = totalKm + ' km';
+        document.getElementById('sum-payout').textContent   = '₹ ' + totalPayout.toFixed(2);
+        document.getElementById('sum-officers').textContent = officers;
+        document.getElementById('sum-month').textContent    = '₹ ' + monthPayout.toFixed(2);
+    }
+
+    // ── FILTERS ──
+    function clearFilters() {
+        document.getElementById('filter-date').value     = '';
+        document.getElementById('filter-officer').value = '';
+        renderLog();
+    }
+
+    // ── EXPORT CSV ──
+    function exportCSV() {
+        const log = loadLog();
+        if (log.length === 0) { alert('No data to export.'); return; }
+
+        const rows = [
+            ['Date','Officer ID','Officer Name','Rate/KM','Start KM','End KM','Total KM','Payout (INR)'],
+            ...log.map(e => [
+                e.date, e.officerId, e.officerName,
+                e.rate.toFixed(2), e.startKm, e.endKm,
+                e.totalKm, e.payout.toFixed(2)
+            ])
+        ];
+        const csv  = rows.map(r => r.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = 'TOPS_PETROL_LOG_' + new Date().toISOString().slice(0,10) + '.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // ── UTILITY ──
+    function formatDate(iso) {
+        const [y, m, d] = iso.split('-');
+        return `${d}-${m}-${y}`;
+    }
+
+    // ── START ──
+    init();
+</script>
+</body>
+</html>
