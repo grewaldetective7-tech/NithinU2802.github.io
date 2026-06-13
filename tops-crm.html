@@ -20,10 +20,6 @@
             --purple:    #b388ff;
             --text:      #cdd9e5;
             --muted:     #607b96;
-            --excellent: #00e676;
-            --good:      #69f0ae;
-            --average:   #ff9800;
-            --critical:  #ff3d57;
         }
 
         body {
@@ -43,44 +39,30 @@
             justify-content: space-between;
             align-items: center;
         }
-        .topbar-brand {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--accent);
-        }
+        .topbar-brand { font-size: 1.1rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); }
         .topbar-brand span { color: var(--gold); }
-        .topbar-meta {
-            font-size: 0.7rem;
-            color: var(--muted);
-            text-align: right;
-        }
+        .topbar-meta { font-size: 0.7rem; color: var(--muted); text-align: right; }
         .topbar-meta strong { color: var(--text); }
 
-        /* ── MAIN LAYOUT ── */
+        /* ── LAYOUT ── */
         .main { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
 
-        /* ── SECTION LABEL ── */
         .section-label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             letter-spacing: 2px;
             color: var(--muted);
             text-transform: uppercase;
             margin-bottom: 6px;
         }
 
-        /* ── HUD GRID — 12 CARDS ── */
+        /* ── HUD GRID ── */
         .hud-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             gap: 8px;
         }
-
-        /* Admin Card (wider) */
         .card-admin { grid-column: span 2; }
-        /* Beat cards */
         .card-beat  { grid-column: span 1; }
-        /* Management summary */
         .card-mgmt  { grid-column: span 2; }
 
         .hud-card {
@@ -92,11 +74,12 @@
             flex-direction: column;
             gap: 4px;
             min-width: 0;
+            transition: border-color .2s;
         }
-        .hud-card:hover { border-color: var(--accent); transition: border-color .2s; }
+        .hud-card:hover { border-color: var(--accent); }
 
         .card-title {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             letter-spacing: 1.5px;
             color: var(--accent);
             text-transform: uppercase;
@@ -106,77 +89,71 @@
             text-overflow: ellipsis;
         }
         .card-officer {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--gold);
             font-weight: 600;
             margin-bottom: 2px;
         }
 
-        /* Admin card rows */
+        /* Admin rows */
         .admin-row {
             display: flex;
             justify-content: space-between;
-            font-size: 0.68rem;
-            padding: 2px 0;
+            font-size: 0.67rem;
+            padding: 3px 0;
             border-bottom: 1px solid var(--border);
         }
         .admin-row:last-child { border-bottom: none; }
         .admin-row .lbl { color: var(--muted); }
-        .admin-row .val { color: var(--text); font-weight: 600; }
+        .admin-row .val { font-weight: 600; }
 
-        /* Beat card KPIs */
+        /* Beat KPIs — 2 columns, 3 rows */
         .beat-kpis {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2px;
-            font-size: 0.62rem;
+            font-size: 0.61rem;
         }
-        .kpi-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1px 2px;
-        }
-        .kpi-item .kc { color: var(--muted); font-size: 0.58rem; }
-        .kpi-item .kv { color: var(--text); font-weight: 600; }
+        .kpi-item { display: flex; justify-content: space-between; padding: 1px 2px; }
+        .kpi-item .kc { color: var(--muted); font-size: 0.57rem; }
+        .kpi-item .kv { font-weight: 600; }
         .kpi-item .kv.neg { color: var(--red); }
         .kpi-item .kv.pos { color: var(--green); }
+        .kpi-item .kv.neu { color: var(--text); }
 
         /* Performance pill */
         .perf-pill {
-            margin-top: 4px;
+            margin-top: 5px;
             border-radius: 3px;
             padding: 3px 6px;
             text-align: center;
-            font-size: 0.68rem;
+            font-size: 0.67rem;
             font-weight: 700;
             letter-spacing: 1px;
         }
-        .perf-excellent { background: #003d1f; color: var(--excellent); border: 1px solid var(--excellent); }
-        .perf-good      { background: #003d2a; color: var(--good);      border: 1px solid var(--good); }
-        .perf-average   { background: #3d2000; color: var(--average);   border: 1px solid var(--average); }
-        .perf-critical  { background: #3d0010; color: var(--critical);  border: 1px solid var(--critical); }
+        .perf-excellent { background: #003d1f; color: #00e676; border: 1px solid #00e676; }
+        .perf-good      { background: #003d2a; color: #69f0ae; border: 1px solid #69f0ae; }
+        .perf-average   { background: #3d2000; color: #ff9800; border: 1px solid #ff9800; }
+        .perf-critical  { background: #3d0010; color: #ff3d57; border: 1px solid #ff3d57; }
 
         /* Management card */
         .mgmt-row {
             display: flex;
             justify-content: space-between;
-            font-size: 0.65rem;
+            font-size: 0.63rem;
             padding: 3px 0;
             border-bottom: 1px solid var(--border);
         }
         .mgmt-row:last-child { border-bottom: none; }
         .mgmt-row .lbl { color: var(--muted); }
         .mgmt-row .val { font-weight: 700; }
-        .mgmt-row .val.green { color: var(--green); }
-        .mgmt-row .val.red   { color: var(--red); }
-        .mgmt-row .val.orange{ color: var(--orange); }
+        .val-green  { color: #00e676; }
+        .val-red    { color: #ff3d57; }
+        .val-orange { color: #ff9800; }
+        .val-gold   { color: var(--gold); }
 
         /* ── STRIP BARS ── */
-        .strips {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-        }
+        .strips { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
         .strip {
             background: var(--card);
             border: 1px solid var(--border);
@@ -184,44 +161,38 @@
             padding: 10px 12px;
         }
         .strip-title {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 8px;
             font-weight: 700;
         }
-        .strip-1 .strip-title { color: var(--gold); }
-        .strip-2 .strip-title { color: var(--accent); }
-        .strip-3 .strip-title { color: var(--purple); }
+        .strip-pay .strip-title  { color: var(--gold); }
+        .strip-fb  .strip-title  { color: var(--accent); }
+        .strip-resp .strip-title { color: var(--purple); }
 
-        .strip-codes {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
+        .strip-codes { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
         .code-badge {
-            padding: 4px 10px;
+            padding: 4px 9px;
             border-radius: 4px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 1px;
-            cursor: default;
         }
-        .strip-1 .code-badge { background: #2a1d00; color: var(--gold);   border: 1px solid #4a3500; }
-        .strip-2 .code-badge { background: #001a2a; color: var(--accent); border: 1px solid #003558; }
-        .strip-3 .code-badge { background: #1a0033; color: var(--purple); border: 1px solid #380060; }
+        .strip-pay  .code-badge { background: #2a1d00; color: var(--gold);   border: 1px solid #4a3500; }
+        .strip-fb   .code-badge { background: #001a2a; color: var(--accent); border: 1px solid #003558; }
+        .strip-resp .code-badge { background: #1a0033; color: var(--purple); border: 1px solid #380060; }
 
-        .strip-table { width: 100%; border-collapse: collapse; font-size: 0.65rem; }
+        .strip-table { width: 100%; border-collapse: collapse; font-size: 0.63rem; }
         .strip-table tr { border-bottom: 1px solid var(--border); }
         .strip-table tr:last-child { border-bottom: none; }
         .strip-table td { padding: 4px 2px; }
-        .strip-table td:first-child { color: var(--muted); width: 30px; font-weight: 700; }
-        .strip-table td:nth-child(2){ color: var(--text); flex: 1; }
+        .strip-table td:first-child { color: var(--muted); width: 35px; font-weight: 700; }
+        .strip-table td:nth-child(2){ color: var(--text); }
         .strip-table td:last-child  { text-align: right; font-weight: 700; }
-        .strip-1 .strip-table td:last-child { color: var(--gold); }
-        .strip-2 .strip-table td:last-child { color: var(--accent); }
-        .strip-3 .strip-table td:last-child { color: var(--purple); }
+        .strip-pay  .strip-table td:last-child { color: var(--gold); }
+        .strip-fb   .strip-table td:last-child { color: var(--accent); }
+        .strip-resp .strip-table td:last-child { color: var(--purple); }
 
         /* ── REMARK ENGINE ── */
         .remark-engine {
@@ -231,7 +202,7 @@
             padding: 14px 16px;
         }
         .remark-title {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--green);
@@ -240,12 +211,12 @@
         }
         .remark-form {
             display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr 2fr auto;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr 2fr auto;
             gap: 8px;
             align-items: end;
         }
         .form-group { display: flex; flex-direction: column; gap: 4px; }
-        .form-group label { font-size: 0.58rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+        .form-group label { font-size: 0.56rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
         .form-group select,
         .form-group input {
             background: var(--panel);
@@ -253,21 +224,22 @@
             color: var(--text);
             padding: 6px 8px;
             border-radius: 4px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-family: inherit;
             outline: none;
             width: 100%;
         }
         .form-group select:focus,
         .form-group input:focus { border-color: var(--accent); }
+        .form-group select option { background: var(--panel); }
 
         .submit-btn {
             background: var(--accent);
             color: #000;
             border: none;
-            padding: 7px 16px;
+            padding: 7px 18px;
             border-radius: 4px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 1px;
             cursor: pointer;
@@ -277,55 +249,81 @@
         }
         .submit-btn:hover { background: var(--green); }
 
-        /* ── ACTIVITY FEED ── */
-        .bottom-row {
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 10px;
+        .counter-preview {
+            margin-top: 10px;
+            font-size: 0.61rem;
+            color: var(--muted);
+            min-height: 18px;
+            letter-spacing: 1px;
+            padding: 4px 0;
         }
+        .counter-preview.active { color: var(--accent); }
+
+        /* ── BOTTOM ROW ── */
+        .bottom-row { display: grid; grid-template-columns: 1fr 290px; gap: 10px; }
+
         .activity-feed {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 6px;
             padding: 12px;
-            overflow: hidden;
         }
         .feed-title {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             letter-spacing: 2px;
             color: var(--accent);
             text-transform: uppercase;
             font-weight: 700;
             margin-bottom: 8px;
         }
-        .feed-list { display: flex; flex-direction: column; gap: 4px; }
+        .feed-header {
+            display: grid;
+            grid-template-columns: 55px 70px 130px 80px 1fr 85px;
+            gap: 6px;
+            font-size: 0.56rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0 4px 6px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4px;
+        }
+        .feed-list { display: flex; flex-direction: column; gap: 3px; }
         .feed-item {
             display: grid;
-            grid-template-columns: 55px 70px 110px 80px 1fr 80px;
+            grid-template-columns: 55px 70px 130px 80px 1fr 85px;
             gap: 6px;
-            font-size: 0.63rem;
-            padding: 5px 6px;
+            font-size: 0.62rem;
+            padding: 5px 4px;
             border-radius: 3px;
             align-items: center;
         }
         .feed-item:hover { background: var(--panel); }
-        .feed-item .f-time  { color: var(--muted); }
-        .feed-item .f-beat  { color: var(--gold); font-weight: 600; }
-        .feed-item .f-type  { }
-        .feed-item .f-resp  { color: var(--muted); font-size: 0.6rem; }
-        .feed-item .f-note  { color: var(--text); }
-        .feed-item .f-status{ text-align: right; font-size: 0.6rem; font-weight: 700; border-radius: 2px; padding: 1px 5px; }
-        .f-status.open     { background: #3d0010; color: var(--red); }
-        .f-status.pending  { background: #3d2000; color: var(--orange); }
-        .f-status.resolved { background: #003d1f; color: var(--green); }
+        .f-time  { color: var(--muted); }
+        .f-beat  { color: var(--gold); font-weight: 600; }
+        .f-resp  { color: var(--muted); font-size: 0.59rem; }
+        .f-note  { color: var(--text); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .f-status {
+            text-align: center;
+            font-size: 0.58rem;
+            font-weight: 700;
+            border-radius: 3px;
+            padding: 2px 5px;
+        }
+        .status-open     { background: #3d0010; color: #ff3d57; }
+        .status-pending  { background: #3d2000; color: #ff9800; }
+        .status-resolved { background: #003d1f; color: #00e676; }
+        .status-closed   { background: #1a1a1a; color: var(--muted); }
 
-        /* Type colors */
-        .t-payment   { color: var(--gold); }
-        .t-service   { color: var(--red); }
-        .t-complaint { color: var(--orange); }
-        .t-feedback  { color: var(--green); }
-        .t-trial     { color: var(--accent); }
-        .t-closed    { color: var(--muted); }
+        /* Feedback type colours */
+        .t-appreciation { color: #00e676; }
+        .t-complaint    { color: #ff3d57; }
+        .t-payment      { color: var(--gold); }
+        .t-emergency    { color: #ff9800; }
+        .t-rsa          { color: var(--accent); }
+        .t-trial        { color: var(--purple); }
+        .t-closed       { color: var(--muted); }
+        .t-service      { color: #ff6b6b; }
 
         /* ── ALERT PANEL ── */
         .alert-panel {
@@ -338,7 +336,7 @@
             gap: 6px;
         }
         .alert-title {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             letter-spacing: 2px;
             color: var(--red);
             text-transform: uppercase;
@@ -350,17 +348,18 @@
             border-left: 3px solid var(--red);
             padding: 6px 8px;
             border-radius: 0 3px 3px 0;
-            font-size: 0.62rem;
+            font-size: 0.61rem;
         }
         .alert-item.warn { border-left-color: var(--orange); }
         .alert-item.info { border-left-color: var(--accent); }
-        .alert-item .a-head { font-weight: 700; margin-bottom: 1px; }
-        .alert-item.warn .a-head  { color: var(--orange); }
-        .alert-item:not(.warn):not(.info) .a-head { color: var(--red); }
-        .alert-item.info .a-head  { color: var(--accent); }
-        .alert-item .a-sub  { color: var(--muted); font-size: 0.58rem; }
+        .alert-item.good { border-left-color: var(--green); }
+        .a-head { font-weight: 700; margin-bottom: 2px; }
+        .alert-item:not(.warn):not(.info):not(.good) .a-head { color: var(--red); }
+        .alert-item.warn .a-head { color: var(--orange); }
+        .alert-item.info .a-head { color: var(--accent); }
+        .alert-item.good .a-head { color: var(--green); }
+        .a-sub { color: var(--muted); font-size: 0.57rem; }
 
-        /* ── LIVE CLOCK ── */
         #live-clock { font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
     </style>
 </head>
@@ -369,10 +368,14 @@
 <!-- TOP BAR -->
 <div class="topbar">
     <div class="topbar-brand">TOPS <span>CRM</span> // COMMAND CENTER</div>
-    <div style="display:flex;gap:24px;align-items:center;">
-        <div class="topbar-meta">
+    <div style="display:flex;gap:28px;align-items:center;">
+        <div class="topbar-meta" style="text-align:center;">
+            <strong>SINGLE SOURCE OF TRUTH</strong><br>
+            Payment · Feedback · Service Intelligence
+        </div>
+        <div class="topbar-meta" style="text-align:right;">
             <strong id="live-clock">--:--:--</strong><br>
-            UNIVERSAL HUB v1.0
+            UNIVERSAL HUB v2.0 — FINAL LOCKED
         </div>
         <div class="topbar-meta" style="text-align:right;">
             <strong>7,240</strong> TOTAL UNITS<br>
@@ -385,31 +388,31 @@
 
     <!-- ── HUD: 12 CARDS ── -->
     <div>
-        <div class="section-label">TOP HUD — UNIT INTELLIGENCE</div>
+        <div class="section-label">TOP HUD — UNIT INTELLIGENCE (12 CARDS)</div>
         <div class="hud-grid">
 
             <!-- CARD 1: CRM Admin -->
             <div class="hud-card card-admin">
                 <div class="card-title">CRM ADMIN</div>
                 <div class="admin-row"><span class="lbl">TOTAL UNITS</span><span class="val">7,240</span></div>
-                <div class="admin-row"><span class="lbl">ACTIVE</span><span class="val" style="color:var(--green)">6,810</span></div>
+                <div class="admin-row"><span class="lbl">ACTIVE</span><span class="val val-green">6,810</span></div>
                 <div class="admin-row"><span class="lbl">TRIAL</span><span class="val" style="color:var(--accent)">215</span></div>
-                <div class="admin-row"><span class="lbl">CLOSED</span><span class="val" style="color:var(--red)">215</span></div>
+                <div class="admin-row"><span class="lbl">CLOSED</span><span class="val val-red">215</span></div>
             </div>
 
             <!-- CARDS 2–11: Beat 01–10 -->
+            <!-- Beat codes: AU=Active Units, UC=Unit Closed, APP=Appreciation, CMP=Complaint, PAY=Payment Issues, HS=Help Support -->
+
             <div class="hud-card card-beat">
                 <div class="card-title">BEAT 01</div>
                 <div class="card-officer">ID11 AMIT</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">724</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">724</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">05</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">04</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">10</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">15</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">08</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">02</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">06</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">12</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">03</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">04</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">15</span></div>
                 </div>
                 <div class="perf-pill perf-good">PERF 82%</div>
             </div>
@@ -418,14 +421,12 @@
                 <div class="card-title">BEAT 02</div>
                 <div class="card-officer">ID12 RAHUL</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">681</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">681</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">03</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">02</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">01</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">11</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">06</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">01</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">04</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">18</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">01</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">02</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">11</span></div>
                 </div>
                 <div class="perf-pill perf-excellent">PERF 91%</div>
             </div>
@@ -434,14 +435,12 @@
                 <div class="card-title">BEAT 03</div>
                 <div class="card-officer">ID13 SURESH</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">698</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">698</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">08</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">06</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">14</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">09</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">04</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">05</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">02</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">04</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">07</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">09</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">06</span></div>
                 </div>
                 <div class="perf-pill perf-average">PERF 68%</div>
             </div>
@@ -450,14 +449,12 @@
                 <div class="card-title">BEAT 04</div>
                 <div class="card-officer">ID14 PRIYA</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">712</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">712</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">04</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">03</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">07</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">18</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">12</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">01</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">08</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">14</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">02</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">03</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">18</span></div>
                 </div>
                 <div class="perf-pill perf-excellent">PERF 88%</div>
             </div>
@@ -466,14 +463,12 @@
                 <div class="card-title">BEAT 05</div>
                 <div class="card-officer">ID15 VIKRAM</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">654</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">654</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">11</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">09</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">18</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">06</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">02</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">08</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">01</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">02</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">09</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">12</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">05</span></div>
                 </div>
                 <div class="perf-pill perf-critical">PERF 54%</div>
             </div>
@@ -482,14 +477,12 @@
                 <div class="card-title">BEAT 06</div>
                 <div class="card-officer">ID16 NEHA</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">731</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">731</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">02</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">01</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">03</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">21</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">16</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">00</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">10</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">20</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">00</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">01</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">21</span></div>
                 </div>
                 <div class="perf-pill perf-excellent">PERF 96%</div>
             </div>
@@ -498,14 +491,12 @@
                 <div class="card-title">BEAT 07</div>
                 <div class="card-officer">ID17 ARJUN</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">688</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">688</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">06</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">05</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">09</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">13</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">07</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">03</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">05</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">08</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">04</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">05</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">13</span></div>
                 </div>
                 <div class="perf-pill perf-good">PERF 78%</div>
             </div>
@@ -514,14 +505,12 @@
                 <div class="card-title">BEAT 08</div>
                 <div class="card-officer">ID18 SONIA</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">702</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">702</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">07</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">04</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">11</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">10</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">05</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">04</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">03</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">06</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">05</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">07</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">10</span></div>
                 </div>
                 <div class="perf-pill perf-average">PERF 72%</div>
             </div>
@@ -530,14 +519,12 @@
                 <div class="card-title">BEAT 09</div>
                 <div class="card-officer">ID19 MOHAN</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">668</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">668</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">09</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">07</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">16</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">08</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">03</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">06</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">02</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">03</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">08</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">10</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">07</span></div>
                 </div>
                 <div class="perf-pill perf-average">PERF 62%</div>
             </div>
@@ -546,14 +533,12 @@
                 <div class="card-title">BEAT 10</div>
                 <div class="card-officer">ID20 KAVYA</div>
                 <div class="beat-kpis">
-                    <div class="kpi-item"><span class="kc">AU</span><span class="kv">752</span></div>
+                    <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">752</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">02</span></div>
-                    <div class="kpi-item"><span class="kc">SI</span><span class="kv neg">01</span></div>
-                    <div class="kpi-item"><span class="kc">SR</span><span class="kv neg">04</span></div>
-                    <div class="kpi-item"><span class="kc">HS</span><span class="kv">19</span></div>
-                    <div class="kpi-item"><span class="kc">CF</span><span class="kv pos">14</span></div>
-                    <div class="kpi-item"><span class="kc">OC</span><span class="kv neg">00</span></div>
-                    <div class="kpi-item"><span class="kc">RC</span><span class="kv pos">09</span></div>
+                    <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">16</span></div>
+                    <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">01</span></div>
+                    <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">02</span></div>
+                    <div class="kpi-item"><span class="kc">HS</span><span class="kv neu">19</span></div>
                 </div>
                 <div class="perf-pill perf-excellent">PERF 94%</div>
             </div>
@@ -562,24 +547,28 @@
             <div class="hud-card card-mgmt">
                 <div class="card-title">MANAGEMENT SUMMARY</div>
                 <div class="mgmt-row">
-                    <span class="lbl">TOP PERFORMER</span>
-                    <span class="val green">ID16 NEHA (96%)</span>
+                    <span class="lbl">BEST BEAT</span>
+                    <span class="val val-green">BEAT 06 — 96%</span>
                 </div>
                 <div class="mgmt-row">
-                    <span class="lbl">LOWEST PERFORMER</span>
-                    <span class="val red">ID15 VIKRAM (54%)</span>
+                    <span class="lbl">LOWEST BEAT</span>
+                    <span class="val val-red">BEAT 05 — 54%</span>
                 </div>
                 <div class="mgmt-row">
-                    <span class="lbl">OPEN ISSUES</span>
-                    <span class="val orange">30</span>
+                    <span class="lbl">OPEN COMPLAINTS</span>
+                    <span class="val val-orange">30</span>
+                </div>
+                <div class="mgmt-row">
+                    <span class="lbl">OUTSTANDING AMT</span>
+                    <span class="val val-gold">₹2,80,000</span>
                 </div>
                 <div class="mgmt-row">
                     <span class="lbl">HIGH RISK UNITS</span>
-                    <span class="val red">142</span>
+                    <span class="val val-red">142</span>
                 </div>
             </div>
 
-        </div><!-- /hud-grid -->
+        </div>
     </div>
 
     <!-- ── STRIP BARS ── -->
@@ -587,16 +576,16 @@
         <div class="section-label">INTELLIGENCE STRIPS</div>
         <div class="strips">
 
-            <!-- STRIP 1: Payment Matrix -->
-            <div class="strip strip-1">
-                <div class="strip-title">PAYMENT MATRIX</div>
+            <!-- STRIP 1: Payment -->
+            <div class="strip strip-pay">
+                <div class="strip-title">STRIP 1 — PAYMENT</div>
                 <div class="strip-codes">
                     <span class="code-badge">PD 150</span>
                     <span class="code-badge">PV 45</span>
                     <span class="code-badge">DF 12</span>
                     <span class="code-badge">PH 04</span>
                     <span class="code-badge">PC 06</span>
-                    <span class="code-badge">OU ₹2.8L</span>
+                    <span class="code-badge">OUT ₹2.8L</span>
                 </div>
                 <table class="strip-table">
                     <tr><td>PD</td><td>Payment Due</td><td>150</td></tr>
@@ -604,34 +593,34 @@
                     <tr><td>DF</td><td>Deferred</td><td>12</td></tr>
                     <tr><td>PH</td><td>Payment Hold</td><td>04</td></tr>
                     <tr><td>PC</td><td>Payment Cut</td><td>06</td></tr>
-                    <tr><td>OU</td><td>Outstanding Amount</td><td>₹2,80,000</td></tr>
+                    <tr><td>OUT</td><td>Outstanding Amount</td><td>₹2,80,000</td></tr>
                 </table>
             </div>
 
-            <!-- STRIP 2: Service Matrix -->
-            <div class="strip strip-2">
-                <div class="strip-title">SERVICE MATRIX</div>
+            <!-- STRIP 2: Client Feedback -->
+            <div class="strip strip-fb">
+                <div class="strip-title">STRIP 2 — CLIENT FEEDBACK</div>
                 <div class="strip-codes">
-                    <span class="code-badge">SI 15</span>
-                    <span class="code-badge">OC 08</span>
-                    <span class="code-badge">RC 25</span>
-                    <span class="code-badge">CF 40</span>
-                    <span class="code-badge">HS 32</span>
-                    <span class="code-badge">SR 12</span>
+                    <span class="code-badge">APP 40</span>
+                    <span class="code-badge">CMP 08</span>
+                    <span class="code-badge">RES 25</span>
+                    <span class="code-badge">ISS 15</span>
+                    <span class="code-badge">RSA 12</span>
+                    <span class="code-badge">RRT 09</span>
                 </div>
                 <table class="strip-table">
-                    <tr><td>SI</td><td>Service Issue</td><td>15</td></tr>
-                    <tr><td>OC</td><td>Open Complaint</td><td>08</td></tr>
-                    <tr><td>RC</td><td>Resolved Complaint</td><td>25</td></tr>
-                    <tr><td>CF</td><td>Client Feedback Positive</td><td>40</td></tr>
-                    <tr><td>HS</td><td>Help Support</td><td>32</td></tr>
-                    <tr><td>SR</td><td>Sleeping Report</td><td>12</td></tr>
+                    <tr><td>APP</td><td>Appreciation</td><td>40</td></tr>
+                    <tr><td>CMP</td><td>Complaint</td><td>08</td></tr>
+                    <tr><td>RES</td><td>Resolved</td><td>25</td></tr>
+                    <tr><td>ISS</td><td>Service Issue</td><td>15</td></tr>
+                    <tr><td>RSA</td><td>RSA Feedback</td><td>12</td></tr>
+                    <tr><td>RRT</td><td>Rapid Response Feedback</td><td>09</td></tr>
                 </table>
             </div>
 
             <!-- STRIP 3: Responsibility Matrix -->
-            <div class="strip strip-3">
-                <div class="strip-title">RESPONSIBILITY MATRIX</div>
+            <div class="strip strip-resp">
+                <div class="strip-title">STRIP 3 — RESPONSIBILITY MATRIX</div>
                 <div class="strip-codes">
                     <span class="code-badge">QRT 18</span>
                     <span class="code-badge">MKT 06</span>
@@ -646,43 +635,48 @@
                     <tr><td>ACC</td><td>Accounts Team</td><td>04</td></tr>
                     <tr><td>ADM</td><td>Admin Team</td><td>02</td></tr>
                     <tr><td>CLI</td><td>Client Side</td><td>11</td></tr>
-                    <tr><td>TEC</td><td>Technical/CCTV Team</td><td>03</td></tr>
+                    <tr><td>TEC</td><td>Technical Team</td><td>03</td></tr>
                 </table>
             </div>
 
         </div>
     </div>
 
-    <!-- ── REMARK ENGINE ── -->
+    <!-- ── UNIVERSAL REMARK ENGINE ── -->
     <div>
-        <div class="section-label">UNIVERSAL REMARK ENGINE</div>
+        <div class="section-label">UNIVERSAL REMARK ENGINE — SINGLE ENTRY → AUTO UPDATE ALL COUNTERS</div>
         <div class="remark-engine">
-            <div class="remark-title">SINGLE ENTRY — AUTO COUNTER UPDATE</div>
+            <div class="remark-title">ONE REMARK. EVERY COUNTER UPDATES AUTOMATICALLY.</div>
             <div class="remark-form">
                 <div class="form-group">
-                    <label>Remark Type</label>
-                    <select id="remark-type">
+                    <label>Feedback Type</label>
+                    <select id="feedback-type">
                         <option value="">— Select Type —</option>
-                        <option>Positive Feedback</option>
-                        <option>Service Issue</option>
-                        <option>Open Complaint</option>
-                        <option>Complaint Resolved</option>
-                        <option>Sleeping Report</option>
-                        <option>Help Support</option>
-                        <option>Payment Due</option>
-                        <option>Payment Hold</option>
-                        <option>Payment Cut</option>
-                        <option>Payment Received</option>
-                        <option>Trial Failed</option>
-                        <option>Trial Converted</option>
-                        <option>Unit Closed</option>
-                        <option>Emergency Support</option>
-                        <option>Technical Issue</option>
+                        <optgroup label="POSITIVE">
+                            <option value="Appreciation">Appreciation</option>
+                            <option value="Emergency Response Feedback">Emergency Response Feedback</option>
+                            <option value="RSA Feedback">RSA Feedback</option>
+                            <option value="Rapid Response Feedback">Rapid Response Feedback</option>
+                            <option value="Trial Converted">Trial Converted</option>
+                        </optgroup>
+                        <optgroup label="SERVICE">
+                            <option value="Complaint">Complaint</option>
+                            <option value="Service Issue">Service Issue</option>
+                        </optgroup>
+                        <optgroup label="PAYMENT">
+                            <option value="Payment Issue">Payment Issue</option>
+                            <option value="Payment Hold">Payment Hold</option>
+                            <option value="Payment Received">Payment Received</option>
+                        </optgroup>
+                        <optgroup label="UNIT STATUS">
+                            <option value="Trial Failed">Trial Failed</option>
+                            <option value="Unit Closed">Unit Closed</option>
+                        </optgroup>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Responsibility</label>
-                    <select>
+                    <select id="resp-select">
                         <option value="">— Select —</option>
                         <option>QRT</option>
                         <option>Marketing</option>
@@ -694,7 +688,7 @@
                 </div>
                 <div class="form-group">
                     <label>Status</label>
-                    <select>
+                    <select id="status-select">
                         <option value="">— Select —</option>
                         <option>Open</option>
                         <option>Pending</option>
@@ -703,192 +697,241 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Impact</label>
-                    <select>
-                        <option value="">— Select —</option>
-                        <option>Positive</option>
-                        <option>Neutral</option>
-                        <option>Negative</option>
+                    <label>Beat</label>
+                    <select id="beat-select">
+                        <option value="">— Beat —</option>
+                        <option>BEAT 01</option>
+                        <option>BEAT 02</option>
+                        <option>BEAT 03</option>
+                        <option>BEAT 04</option>
+                        <option>BEAT 05</option>
+                        <option>BEAT 06</option>
+                        <option>BEAT 07</option>
+                        <option>BEAT 08</option>
+                        <option>BEAT 09</option>
+                        <option>BEAT 10</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Short Remark</label>
-                    <input type="text" placeholder="e.g. Client requested 15 day payment extension">
+                    <input id="remark-text" type="text" placeholder="e.g. Client requested 15 day payment extension">
                 </div>
                 <button class="submit-btn" onclick="submitRemark()">LOG</button>
             </div>
-            <!-- Auto-counter rules display -->
-            <div id="counter-preview" style="margin-top:10px;font-size:0.62rem;color:var(--muted);min-height:18px;letter-spacing:1px;"></div>
+            <div id="counter-preview" class="counter-preview"></div>
         </div>
     </div>
 
-    <!-- ── BOTTOM ROW: Activity Feed + Alerts ── -->
+    <!-- ── BOTTOM ROW ── -->
     <div class="bottom-row">
+
         <div class="activity-feed">
             <div class="feed-title">RECENT ACTIVITY LOG</div>
+            <div class="feed-header">
+                <span>TIME</span><span>BEAT</span><span>FEEDBACK TYPE</span>
+                <span>RESP</span><span>REMARK</span><span>STATUS</span>
+            </div>
             <div class="feed-list" id="feed-list">
                 <div class="feed-item">
                     <span class="f-time">09:42</span>
                     <span class="f-beat">BEAT 06</span>
-                    <span class="f-type t-feedback">Positive Feedback</span>
+                    <span class="f-type t-appreciation">Appreciation</span>
                     <span class="f-resp">CLIENT</span>
-                    <span class="f-note">Happy with service this month</span>
-                    <span class="f-status resolved">RESOLVED</span>
+                    <span class="f-note">Very happy with this month's service</span>
+                    <span class="f-status status-resolved">RESOLVED</span>
                 </div>
                 <div class="feed-item">
                     <span class="f-time">09:31</span>
                     <span class="f-beat">BEAT 05</span>
-                    <span class="f-type t-service">Service Issue</span>
+                    <span class="f-type t-complaint">Complaint</span>
                     <span class="f-resp">QRT</span>
                     <span class="f-note">Guard absent at night shift</span>
-                    <span class="f-status open">OPEN</span>
+                    <span class="f-status status-open">OPEN</span>
                 </div>
                 <div class="feed-item">
                     <span class="f-time">09:18</span>
                     <span class="f-beat">BEAT 02</span>
                     <span class="f-type t-payment">Payment Received</span>
                     <span class="f-resp">ACCOUNTS</span>
-                    <span class="f-note">Full payment for June cycle</span>
-                    <span class="f-status resolved">RESOLVED</span>
+                    <span class="f-note">Full payment cleared for June cycle</span>
+                    <span class="f-status status-resolved">RESOLVED</span>
                 </div>
                 <div class="feed-item">
                     <span class="f-time">09:05</span>
                     <span class="f-beat">BEAT 03</span>
-                    <span class="f-type t-complaint">Open Complaint</span>
-                    <span class="f-resp">QRT</span>
-                    <span class="f-note">CCTV offline since yesterday</span>
-                    <span class="f-status pending">PENDING</span>
+                    <span class="f-type t-service">Service Issue</span>
+                    <span class="f-resp">TEC</span>
+                    <span class="f-note">CCTV offline since yesterday evening</span>
+                    <span class="f-status status-pending">PENDING</span>
                 </div>
                 <div class="feed-item">
                     <span class="f-time">08:52</span>
                     <span class="f-beat">BEAT 10</span>
-                    <span class="f-type t-feedback">Complaint Resolved</span>
-                    <span class="f-resp">TECHNICAL</span>
-                    <span class="f-note">Network issue fixed</span>
-                    <span class="f-status resolved">RESOLVED</span>
+                    <span class="f-type t-appreciation">Appreciation</span>
+                    <span class="f-resp">QRT</span>
+                    <span class="f-note">Client appreciated rapid response last night</span>
+                    <span class="f-status status-closed">CLOSED</span>
                 </div>
                 <div class="feed-item">
                     <span class="f-time">08:40</span>
                     <span class="f-beat">BEAT 01</span>
                     <span class="f-type t-trial">Trial Converted</span>
-                    <span class="f-resp">MARKETING</span>
-                    <span class="f-note">New client onboarded, 3-year contract</span>
-                    <span class="f-status resolved">RESOLVED</span>
+                    <span class="f-resp">MKT</span>
+                    <span class="f-note">New client — 3-year contract signed</span>
+                    <span class="f-status status-resolved">RESOLVED</span>
                 </div>
                 <div class="feed-item">
                     <span class="f-time">08:21</span>
                     <span class="f-beat">BEAT 05</span>
                     <span class="f-type t-payment">Payment Hold</span>
                     <span class="f-resp">CLIENT</span>
-                    <span class="f-note">Requested 15 day extension</span>
-                    <span class="f-status pending">PENDING</span>
+                    <span class="f-note">Client requested 15 day extension</span>
+                    <span class="f-status status-pending">PENDING</span>
                 </div>
                 <div class="feed-item">
                     <span class="f-time">08:10</span>
-                    <span class="f-beat">BEAT 09</span>
-                    <span class="f-type t-service">Sleeping Report</span>
+                    <span class="f-beat">BEAT 04</span>
+                    <span class="f-type t-rsa">RSA Feedback</span>
                     <span class="f-resp">QRT</span>
-                    <span class="f-note">Guard found sleeping — logged</span>
-                    <span class="f-status open">OPEN</span>
+                    <span class="f-note">RSA team responded in under 8 minutes</span>
+                    <span class="f-status status-resolved">RESOLVED</span>
+                </div>
+                <div class="feed-item">
+                    <span class="f-time">07:55</span>
+                    <span class="f-beat">BEAT 09</span>
+                    <span class="f-type t-complaint">Complaint</span>
+                    <span class="f-resp">QRT</span>
+                    <span class="f-note">Gate guard sleeping — reported by client</span>
+                    <span class="f-status status-open">OPEN</span>
                 </div>
             </div>
         </div>
 
         <div class="alert-panel">
-            <div class="alert-title">ALERTS</div>
+            <div class="alert-title">SYSTEM ALERTS</div>
             <div class="alert-item">
                 <div class="a-head">BEAT 05 — CRITICAL</div>
-                <div class="a-sub">Performance dropped to 54% — 3rd consecutive week</div>
+                <div class="a-sub">PERF 54% — 3rd consecutive low week</div>
             </div>
             <div class="alert-item warn">
                 <div class="a-head">142 HIGH RISK UNITS</div>
-                <div class="a-sub">Overdue > 60 days — escalation required</div>
+                <div class="a-sub">Overdue >60 days — escalation required</div>
             </div>
             <div class="alert-item warn">
-                <div class="a-head">BEAT 03 — SLEEPING REPORTS</div>
-                <div class="a-sub">14 SR logged this cycle — above threshold</div>
+                <div class="a-head">OUT ₹2.8L OUTSTANDING</div>
+                <div class="a-sub">6 payment cuts at risk this cycle</div>
+            </div>
+            <div class="alert-item warn">
+                <div class="a-head">30 OPEN COMPLAINTS</div>
+                <div class="a-sub">Beats 03, 05, 09 — action needed today</div>
+            </div>
+            <div class="alert-item good">
+                <div class="a-head">BEAT 06 — BEST MONTH</div>
+                <div class="a-sub">Zero complaints, APP 20 — share practices</div>
             </div>
             <div class="alert-item info">
-                <div class="a-head">BEAT 06 — TOP MONTH</div>
-                <div class="a-sub">Zero open complaints, CF 16 — share best practices</div>
-            </div>
-            <div class="alert-item warn">
-                <div class="a-head">₹2.8L OUTSTANDING</div>
-                <div class="a-sub">Collection drive needed — 6 payment cuts at risk</div>
+                <div class="a-head">215 TRIAL UNITS ACTIVE</div>
+                <div class="a-sub">Conversion target: 60% this month</div>
             </div>
         </div>
+
     </div>
 
-</div><!-- /main -->
+</div>
 
 <script>
     // Live clock
     function updateClock() {
-        const now = new Date();
         document.getElementById('live-clock').textContent =
-            now.toLocaleTimeString('en-IN', { hour12: false });
+            new Date().toLocaleTimeString('en-IN', { hour12: false });
     }
     updateClock();
     setInterval(updateClock, 1000);
 
-    // Auto-counter preview on remark type change
-    const rules = {
-        'Positive Feedback':   'CF +1 → QRT Positive +1 → Beat Positive +1',
-        'Service Issue':       'SI +1 → QRT +1 → Beat Negative +1',
-        'Open Complaint':      'OC +1 → QRT +1 → Beat Negative +1',
-        'Complaint Resolved':  'RC +1 → QRT Positive +1',
-        'Sleeping Report':     'SR +1 → QRT Negative +1 → Beat Negative +1',
-        'Help Support':        'HS +1',
-        'Payment Due':         'PD +1 → ACC +1',
-        'Payment Hold':        'PH +1 → CLI +1',
-        'Payment Cut':         'PC +1 → ACC +1 → Beat Negative +1',
-        'Payment Received':    'PV +1 → ACC Positive +1',
-        'Trial Failed':        'UC +1 → MKT +1 → Beat Negative +1',
-        'Trial Converted':     'AU +1 → MKT Positive +1',
-        'Unit Closed':         'UC +1 → [Reason logged: Payment / Service / Complaint / Client / Business / Trial]',
-        'Emergency Support':   'HS +1 → QRT Urgent +1',
-        'Technical Issue':     'SI +1 → TEC +1 → Beat Negative +1',
+    // Auto-counter rules per Section 4 of Final Locked Architecture
+    const counterRules = {
+        'Appreciation':                 'APP +1 → Officer Positive Score +1 → Beat Positive +1',
+        'Emergency Response Feedback':  'APP +1 (Emergency) → QRT Positive +1 → Beat Positive +1 → RRT +1',
+        'RSA Feedback':                 'RSA +1 → QRT Positive +1 → Beat Positive +1',
+        'Rapid Response Feedback':      'RRT +1 → QRT Positive +1 → Beat Positive +1',
+        'Trial Converted':              'AU +1 → MKT Positive +1 → Beat Positive +1',
+        'Complaint':                    'CMP +1 → Beat Complaint Count +1 → Responsible Team Count +1',
+        'Service Issue':                'ISS +1 → Beat Complaint Count +1 → Responsible Team Count +1',
+        'Payment Issue':                'PAY +1 → ACC +1 → Beat Negative +1',
+        'Payment Hold':                 'PH +1 → CLI +1',
+        'Payment Received':             'PV +1 → ACC Positive +1',
+        'Trial Failed':                 'UC +1 → MKT +1 → Beat Negative +1',
+        'Unit Closed':                  'UC +1 → Root Cause Count +1 → [Reason: Payment / Service / Complaint / Client / Business / Trial]',
     };
 
-    document.getElementById('remark-type').addEventListener('change', function() {
-        const preview = document.getElementById('counter-preview');
-        preview.textContent = this.value ? '→ AUTO UPDATE: ' + (rules[this.value] || '') : '';
-        preview.style.color = this.value ? 'var(--accent)' : 'var(--muted)';
+    document.getElementById('feedback-type').addEventListener('change', function () {
+        const el = document.getElementById('counter-preview');
+        if (this.value && counterRules[this.value]) {
+            el.textContent = '→ AUTO UPDATE: ' + counterRules[this.value];
+            el.className = 'counter-preview active';
+        } else {
+            el.textContent = '';
+            el.className = 'counter-preview';
+        }
     });
 
-    // Submit remark — prepends to activity feed
+    // Type → CSS class map
+    const typeClass = {
+        'Appreciation':                't-appreciation',
+        'Emergency Response Feedback': 't-emergency',
+        'RSA Feedback':                't-rsa',
+        'Rapid Response Feedback':     't-rsa',
+        'Trial Converted':             't-trial',
+        'Complaint':                   't-complaint',
+        'Service Issue':               't-service',
+        'Payment Issue':               't-payment',
+        'Payment Hold':                't-payment',
+        'Payment Received':            't-payment',
+        'Trial Failed':                't-closed',
+        'Unit Closed':                 't-closed',
+    };
+
+    // Status → CSS class map
+    const statusClass = {
+        'Open': 'status-open', 'Pending': 'status-pending',
+        'Resolved': 'status-resolved', 'Closed': 'status-closed',
+    };
+
     function submitRemark() {
-        const type = document.getElementById('remark-type').value;
-        if (!type) { alert('Please select a Remark Type.'); return; }
-        const now = new Date();
-        const time = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false });
-        const noteEl = document.querySelector('.remark-form input');
-        const note = noteEl.value || '—';
-        const typeClass = {
-            'Positive Feedback': 't-feedback', 'Complaint Resolved': 't-feedback',
-            'Trial Converted': 't-trial', 'Help Support': 't-trial',
-            'Service Issue': 't-service', 'Open Complaint': 't-complaint',
-            'Sleeping Report': 't-service', 'Technical Issue': 't-service',
-            'Payment Due': 't-payment', 'Payment Hold': 't-payment',
-            'Payment Cut': 't-payment', 'Payment Received': 't-payment',
-            'Trial Failed': 't-closed', 'Unit Closed': 't-closed',
-            'Emergency Support': 't-complaint',
-        }[type] || '';
+        const type   = document.getElementById('feedback-type').value;
+        const resp   = document.getElementById('resp-select').value;
+        const status = document.getElementById('status-select').value;
+        const beat   = document.getElementById('beat-select').value;
+        const note   = document.getElementById('remark-text').value;
+
+        if (!type) { alert('Please select a Feedback Type.'); return; }
+
+        const time = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const tc   = typeClass[type] || '';
+        const sc   = statusClass[status] || 'status-pending';
+
         const item = document.createElement('div');
         item.className = 'feed-item';
-        item.style.background = 'rgba(0,198,255,0.05)';
+        item.style.background = 'rgba(0,198,255,0.06)';
         item.innerHTML = `
             <span class="f-time">${time}</span>
-            <span class="f-beat">NEW ENTRY</span>
-            <span class="f-type ${typeClass}">${type}</span>
-            <span class="f-resp">—</span>
-            <span class="f-note">${note}</span>
-            <span class="f-status pending">LOGGED</span>`;
+            <span class="f-beat">${beat || 'NEW'}</span>
+            <span class="f-type ${tc}">${type}</span>
+            <span class="f-resp">${resp ? resp.toUpperCase().slice(0,3) : '—'}</span>
+            <span class="f-note">${note || '—'}</span>
+            <span class="f-status ${sc}">${status || 'LOGGED'}</span>`;
+
         const feed = document.getElementById('feed-list');
         feed.insertBefore(item, feed.firstChild);
-        noteEl.value = '';
-        document.getElementById('remark-type').value = '';
-        document.getElementById('counter-preview').textContent = '';
+
+        // Reset form
+        ['feedback-type','resp-select','status-select','beat-select'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('remark-text').value = '';
+        const el = document.getElementById('counter-preview');
+        el.textContent = '';
+        el.className = 'counter-preview';
     }
 </script>
 </body>
