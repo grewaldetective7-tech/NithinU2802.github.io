@@ -355,12 +355,36 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Start KM (Photo Verified)</label>
+                            <label>Start KM</label>
                             <input type="number" id="entry-start" placeholder="e.g. 15000" min="0">
                         </div>
                         <div class="form-group">
-                            <label>End KM (Photo Verified)</label>
+                            <label>End KM</label>
                             <input type="number" id="entry-end" placeholder="e.g. 15050" min="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start Photo Link</label>
+                            <input type="url" id="entry-start-photo" placeholder="Drive/WhatsApp link">
+                        </div>
+                        <div class="form-group">
+                            <label>End Photo Link</label>
+                            <input type="url" id="entry-end-photo" placeholder="Drive/WhatsApp link">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Verification Status</label>
+                            <select id="entry-verify-status">
+                                <option value="Pending">Pending</option>
+                                <option value="Verified">Verified</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Verified By</label>
+                            <input type="text" id="entry-verified-by" placeholder="Admin name">
                         </div>
                     </div>
 
@@ -453,11 +477,14 @@
                             <th style="text-align:right;">End KM</th>
                             <th style="text-align:right;">Total KM</th>
                             <th style="text-align:right;">Payout (₹)</th>
+                            <th>Photos</th>
+                            <th>Verify</th>
+                            <th>Verified By</th>
                             <th style="text-align:right;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="log-tbody">
-                        <tr><td colspan="8" class="empty-state">No entries yet. Add your first entry.</td></tr>
+                        <tr><td colspan="11" class="empty-state">No entries yet. Add your first entry.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -623,10 +650,14 @@
 
     // ── ADD ENTRY ──
     function addEntry() {
-        const date      = document.getElementById('entry-date').value;
-        const officerId = document.getElementById('entry-officer').value;
-        const start     = parseFloat(document.getElementById('entry-start').value);
-        const end       = parseFloat(document.getElementById('entry-end').value);
+        const date         = document.getElementById('entry-date').value;
+        const officerId    = document.getElementById('entry-officer').value;
+        const start        = parseFloat(document.getElementById('entry-start').value);
+        const end          = parseFloat(document.getElementById('entry-end').value);
+        const startPhoto   = document.getElementById('entry-start-photo').value.trim();
+        const endPhoto     = document.getElementById('entry-end-photo').value.trim();
+        const verifyStatus = document.getElementById('entry-verify-status').value;
+        const verifiedBy   = document.getElementById('entry-verified-by').value.trim();
 
         if (!date)      { alert('Please select a date.'); return; }
         if (!officerId) { alert('Please select an officer.'); return; }
@@ -642,7 +673,7 @@
 
         const log  = loadLog();
         const entry = {
-            id:         Date.now(),
+            id:          Date.now(),
             date,
             officerId,
             officerName: officer.name,
@@ -651,14 +682,20 @@
             endKm:       end,
             totalKm:     km,
             payout,
+            startPhoto,
+            endPhoto,
+            verifyStatus,
+            verifiedBy,
         };
         log.unshift(entry);
         saveLog(log);
 
         // Reset entry fields
-        document.getElementById('entry-start').value   = '';
-        document.getElementById('entry-end').value     = '';
-        document.getElementById('entry-officer').value = '';
+        ['entry-start','entry-end','entry-start-photo','entry-end-photo','entry-verified-by'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('entry-officer').value      = '';
+        document.getElementById('entry-verify-status').value = 'Pending';
         clearPreview();
 
         renderLog();
@@ -676,10 +713,16 @@
 
         const tbody = document.getElementById('log-tbody');
         if (log.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No entries match the filter.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="11" class="empty-state">No entries match the filter.</td></tr>';
             return;
         }
-        tbody.innerHTML = log.map(e => `
+        const verifyColor = { Verified: '#00e676', Pending: '#ff9800', Rejected: '#ff3d57' };
+        tbody.innerHTML = log.map(e => {
+            const sp = e.startPhoto ? `<a href="${e.startPhoto}" target="_blank" style="color:var(--accent);font-size:0.58rem;">START</a>` : '<span style="color:var(--muted);font-size:0.58rem;">—</span>';
+            const ep = e.endPhoto   ? `<a href="${e.endPhoto}"   target="_blank" style="color:var(--accent);font-size:0.58rem;">END</a>`   : '<span style="color:var(--muted);font-size:0.58rem;">—</span>';
+            const vs = e.verifyStatus || 'Pending';
+            const vc = verifyColor[vs] || '#ff9800';
+            return `
             <tr>
                 <td class="td-date">${formatDate(e.date)}</td>
                 <td class="td-id">${e.officerId}</td>
@@ -688,10 +731,14 @@
                 <td class="td-km" style="text-align:right;">${e.endKm.toLocaleString()}</td>
                 <td class="td-km" style="text-align:right;color:var(--orange);font-weight:700;">${e.totalKm}</td>
                 <td class="td-payout">₹ ${e.payout.toFixed(2)}</td>
+                <td style="font-size:0.6rem;">${sp} ${ep}</td>
+                <td style="font-size:0.62rem;font-weight:700;color:${vc};">${vs}</td>
+                <td style="font-size:0.62rem;color:var(--muted);">${e.verifiedBy || '—'}</td>
                 <td><div class="td-actions">
                     <button class="btn-danger" onclick="deleteEntry(${e.id})">DEL</button>
                 </div></td>
-            </tr>`).join('');
+            </tr>`;
+        }).join('');
     }
 
     function deleteEntry(id) {
@@ -735,11 +782,13 @@
         if (log.length === 0) { alert('No data to export.'); return; }
 
         const rows = [
-            ['Date','Officer ID','Officer Name','Rate/KM','Start KM','End KM','Total KM','Payout (INR)'],
+            ['Date','Officer ID','Officer Name','Rate/KM','Start KM','End KM','Total KM','Payout (INR)','Start Photo','End Photo','Verify Status','Verified By'],
             ...log.map(e => [
                 e.date, e.officerId, e.officerName,
                 e.rate.toFixed(2), e.startKm, e.endKm,
-                e.totalKm, e.payout.toFixed(2)
+                e.totalKm, e.payout.toFixed(2),
+                e.startPhoto || '', e.endPhoto || '',
+                e.verifyStatus || 'Pending', e.verifiedBy || ''
             ])
         ];
         const csv  = rows.map(r => r.join(',')).join('\n');
