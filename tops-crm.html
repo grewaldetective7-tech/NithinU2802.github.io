@@ -8,27 +8,21 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg:        #0a0f1a;
-            --panel:     #0f1826;
-            --card:      #111d2e;
-            --border:    #1a2d45;
-            --accent:    #00c6ff;
-            --gold:      #FFD700;
-            --green:     #00e676;
-            --red:       #ff3d57;
-            --orange:    #ff9800;
-            --purple:    #b388ff;
-            --text:      #cdd9e5;
-            --muted:     #607b96;
+            --bg:      #0a0f1a;
+            --panel:   #0f1826;
+            --card:    #111d2e;
+            --border:  #1a2d45;
+            --accent:  #00c6ff;
+            --gold:    #FFD700;
+            --green:   #00e676;
+            --red:     #ff3d57;
+            --orange:  #ff9800;
+            --purple:  #b388ff;
+            --text:    #cdd9e5;
+            --muted:   #607b96;
         }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', monospace;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', monospace; min-height: 100vh; }
 
         /* ── TOP BAR ── */
         .topbar {
@@ -39,21 +33,69 @@
             justify-content: space-between;
             align-items: center;
         }
-        .topbar-brand { font-size: 1.1rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); }
+        .topbar-brand { font-size: 1.05rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); }
         .topbar-brand span { color: var(--gold); }
-        .topbar-meta { font-size: 0.7rem; color: var(--muted); text-align: right; }
+        .topbar-right { display: flex; gap: 28px; align-items: center; }
+        .topbar-meta { font-size: 0.68rem; color: var(--muted); text-align: right; }
         .topbar-meta strong { color: var(--text); }
+        #live-clock { font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
 
-        /* ── LAYOUT ── */
-        .main { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+        /* ── TAB NAV ── */
+        .tab-nav {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            padding: 0 20px;
+            gap: 2px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 16px 8px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* ── TABS ── */
+        .tab-content { display: none; padding: 14px 16px; }
+        .tab-content.active { display: flex; flex-direction: column; gap: 12px; }
 
         .section-label {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             letter-spacing: 2px;
             color: var(--muted);
             text-transform: uppercase;
             margin-bottom: 6px;
         }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 14px 16px;
+        }
+        .card-title {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .card-title.accent { color: var(--accent); }
+        .card-title.gold   { color: var(--gold); }
+        .card-title.green  { color: var(--green); }
+        .card-title.orange { color: var(--orange); }
+        .card-title.purple { color: var(--purple); }
 
         /* ── HUD GRID ── */
         .hud-grid {
@@ -78,7 +120,7 @@
         }
         .hud-card:hover { border-color: var(--accent); }
 
-        .card-title {
+        .hud-title {
             font-size: 0.58rem;
             letter-spacing: 1.5px;
             color: var(--accent);
@@ -88,14 +130,8 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .card-officer {
-            font-size: 0.68rem;
-            color: var(--gold);
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
+        .hud-officer { font-size: 0.68rem; color: var(--gold); font-weight: 600; margin-bottom: 2px; }
 
-        /* Admin rows */
         .admin-row {
             display: flex;
             justify-content: space-between;
@@ -107,319 +143,223 @@
         .admin-row .lbl { color: var(--muted); }
         .admin-row .val { font-weight: 600; }
 
-        /* Beat KPIs — 2 columns, 3 rows */
-        .beat-kpis {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2px;
-            font-size: 0.61rem;
-        }
+        .beat-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; font-size: 0.61rem; }
         .kpi-item { display: flex; justify-content: space-between; padding: 1px 2px; }
-        .kpi-item .kc { color: var(--muted); font-size: 0.57rem; }
-        .kpi-item .kv { font-weight: 600; }
-        .kpi-item .kv.neg { color: var(--red); }
-        .kpi-item .kv.pos { color: var(--green); }
-        .kpi-item .kv.neu { color: var(--text); }
+        .kc { color: var(--muted); font-size: 0.57rem; }
+        .kv { font-weight: 600; }
+        .kv.neg { color: var(--red); }
+        .kv.pos { color: var(--green); }
+        .kv.neu { color: var(--text); }
 
-        /* Performance pill */
-        .perf-pill {
-            margin-top: 5px;
-            border-radius: 3px;
-            padding: 3px 6px;
-            text-align: center;
-            font-size: 0.67rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+        .perf-pill { margin-top: 5px; border-radius: 3px; padding: 3px 6px; text-align: center; font-size: 0.67rem; font-weight: 700; letter-spacing: 1px; }
         .perf-excellent { background: #003d1f; color: #00e676; border: 1px solid #00e676; }
         .perf-good      { background: #003d2a; color: #69f0ae; border: 1px solid #69f0ae; }
         .perf-average   { background: #3d2000; color: #ff9800; border: 1px solid #ff9800; }
         .perf-critical  { background: #3d0010; color: #ff3d57; border: 1px solid #ff3d57; }
 
-        /* Management card */
-        .mgmt-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.63rem;
-            padding: 3px 0;
-            border-bottom: 1px solid var(--border);
-        }
+        .mgmt-row { display: flex; justify-content: space-between; font-size: 0.63rem; padding: 3px 0; border-bottom: 1px solid var(--border); }
         .mgmt-row:last-child { border-bottom: none; }
         .mgmt-row .lbl { color: var(--muted); }
         .mgmt-row .val { font-weight: 700; }
-        .val-green  { color: #00e676; }
-        .val-red    { color: #ff3d57; }
-        .val-orange { color: #ff9800; }
-        .val-gold   { color: var(--gold); }
+        .vg { color: #00e676; } .vr { color: #ff3d57; } .vo { color: #ff9800; } .vau { color: var(--gold); }
 
-        /* ── STRIP BARS ── */
+        /* ── STRIPS ── */
         .strips { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .strip {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 10px 12px;
-        }
-        .strip-title {
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-        .strip-pay .strip-title  { color: var(--gold); }
-        .strip-fb  .strip-title  { color: var(--accent); }
+        .strip { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; }
+        .strip-title { font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+        .strip-pay  .strip-title { color: var(--gold); }
+        .strip-fb   .strip-title { color: var(--accent); }
         .strip-resp .strip-title { color: var(--purple); }
-
         .strip-codes { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
-        .code-badge {
-            padding: 4px 9px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+        .code-badge { padding: 4px 9px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; }
         .strip-pay  .code-badge { background: #2a1d00; color: var(--gold);   border: 1px solid #4a3500; }
         .strip-fb   .code-badge { background: #001a2a; color: var(--accent); border: 1px solid #003558; }
         .strip-resp .code-badge { background: #1a0033; color: var(--purple); border: 1px solid #380060; }
-
         .strip-table { width: 100%; border-collapse: collapse; font-size: 0.63rem; }
         .strip-table tr { border-bottom: 1px solid var(--border); }
         .strip-table tr:last-child { border-bottom: none; }
         .strip-table td { padding: 4px 2px; }
         .strip-table td:first-child { color: var(--muted); width: 35px; font-weight: 700; }
-        .strip-table td:nth-child(2){ color: var(--text); }
         .strip-table td:last-child  { text-align: right; font-weight: 700; }
         .strip-pay  .strip-table td:last-child { color: var(--gold); }
         .strip-fb   .strip-table td:last-child { color: var(--accent); }
         .strip-resp .strip-table td:last-child { color: var(--purple); }
 
         /* ── REMARK ENGINE ── */
-        .remark-engine {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 14px 16px;
-        }
-        .remark-title {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--green);
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .remark-form {
-            display: grid;
-            grid-template-columns: 1.6fr 1fr 1fr 1fr 2fr auto;
-            gap: 8px;
-            align-items: end;
-        }
+        .remark-engine { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+        .remark-title { font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 12px; }
+
+        .remark-form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .remark-form-grid-2 { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 8px; align-items: end; }
+
         .form-group { display: flex; flex-direction: column; gap: 4px; }
-        .form-group label { font-size: 0.56rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
-        .form-group select,
-        .form-group input {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 6px 8px;
-            border-radius: 4px;
-            font-size: 0.68rem;
-            font-family: inherit;
-            outline: none;
-            width: 100%;
+        .form-group label { font-size: 0.55rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+        .form-group input, .form-group select, .form-group textarea {
+            background: var(--panel); border: 1px solid var(--border); color: var(--text);
+            padding: 6px 8px; border-radius: 4px; font-size: 0.68rem; font-family: inherit; outline: none; width: 100%;
         }
-        .form-group select:focus,
-        .form-group input:focus { border-color: var(--accent); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
         .form-group select option { background: var(--panel); }
+        .form-group textarea { resize: vertical; min-height: 36px; }
 
-        .submit-btn {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 7px 18px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-            text-transform: uppercase;
-            white-space: nowrap;
-            transition: background .2s;
-        }
-        .submit-btn:hover { background: var(--green); }
+        .counter-preview { margin-top: 8px; font-size: 0.6rem; color: var(--muted); min-height: 16px; letter-spacing: 1px; }
+        .counter-preview.on { color: var(--accent); }
 
-        .counter-preview {
-            margin-top: 10px;
-            font-size: 0.61rem;
-            color: var(--muted);
-            min-height: 18px;
-            letter-spacing: 1px;
-            padding: 4px 0;
-        }
-        .counter-preview.active { color: var(--accent); }
+        .btn-primary { background: var(--accent); color: #000; border: none; padding: 8px 20px; border-radius: 4px; font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; white-space: nowrap; transition: background .2s; }
+        .btn-primary:hover { background: var(--green); }
+        .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 5px 12px; border-radius: 4px; font-size: 0.62rem; font-weight: 600; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; transition: all .2s; }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-danger { background: transparent; color: var(--red); border: 1px solid #3d0010; padding: 3px 8px; border-radius: 3px; font-size: 0.58rem; cursor: pointer; transition: all .2s; }
+        .btn-danger:hover { background: #3d0010; }
+        .btn-edit { background: transparent; color: var(--accent); border: 1px solid #003558; padding: 3px 8px; border-radius: 3px; font-size: 0.58rem; cursor: pointer; transition: all .2s; }
+        .btn-edit:hover { background: #001a2a; }
 
         /* ── BOTTOM ROW ── */
         .bottom-row { display: grid; grid-template-columns: 1fr 290px; gap: 10px; }
-
-        .activity-feed {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 12px;
-        }
-        .feed-title {
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            color: var(--accent);
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .feed-header {
-            display: grid;
-            grid-template-columns: 55px 70px 130px 80px 1fr 85px;
-            gap: 6px;
-            font-size: 0.56rem;
-            color: var(--muted);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 0 4px 6px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 4px;
-        }
+        .activity-feed { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+        .feed-title { font-size: 0.58rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+        .feed-header { display: grid; grid-template-columns: 50px 80px 60px 110px 70px 1fr 80px; gap: 6px; font-size: 0.54rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; padding: 0 4px 6px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
         .feed-list { display: flex; flex-direction: column; gap: 3px; }
-        .feed-item {
-            display: grid;
-            grid-template-columns: 55px 70px 130px 80px 1fr 85px;
-            gap: 6px;
-            font-size: 0.62rem;
-            padding: 5px 4px;
-            border-radius: 3px;
-            align-items: center;
-        }
+        .feed-item { display: grid; grid-template-columns: 50px 80px 60px 110px 70px 1fr 80px; gap: 6px; font-size: 0.62rem; padding: 5px 4px; border-radius: 3px; align-items: center; }
         .feed-item:hover { background: var(--panel); }
-        .f-time  { color: var(--muted); }
-        .f-beat  { color: var(--gold); font-weight: 600; }
-        .f-resp  { color: var(--muted); font-size: 0.59rem; }
-        .f-note  { color: var(--text); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-        .f-status {
-            text-align: center;
-            font-size: 0.58rem;
-            font-weight: 700;
-            border-radius: 3px;
-            padding: 2px 5px;
-        }
-        .status-open     { background: #3d0010; color: #ff3d57; }
-        .status-pending  { background: #3d2000; color: #ff9800; }
-        .status-resolved { background: #003d1f; color: #00e676; }
-        .status-closed   { background: #1a1a1a; color: var(--muted); }
+        .f-time { color: var(--muted); } .f-unit { color: var(--accent); font-size: 0.58rem; } .f-beat { color: var(--gold); font-weight: 600; }
+        .f-resp { color: var(--muted); font-size: 0.58rem; } .f-note { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .f-status { text-align: center; font-size: 0.57rem; font-weight: 700; border-radius: 3px; padding: 2px 5px; }
+        .s-open { background: #3d0010; color: #ff3d57; } .s-pending { background: #3d2000; color: #ff9800; }
+        .s-resolved { background: #003d1f; color: #00e676; } .s-closed { background: #1a1a1a; color: var(--muted); }
+        .t-appreciation { color: #00e676; } .t-complaint { color: #ff3d57; } .t-payment { color: var(--gold); }
+        .t-emergency { color: #ff9800; } .t-rsa { color: var(--accent); } .t-trial { color: var(--purple); } .t-closed { color: var(--muted); } .t-service { color: #ff6b6b; }
 
-        /* Feedback type colours */
-        .t-appreciation { color: #00e676; }
-        .t-complaint    { color: #ff3d57; }
-        .t-payment      { color: var(--gold); }
-        .t-emergency    { color: #ff9800; }
-        .t-rsa          { color: var(--accent); }
-        .t-trial        { color: var(--purple); }
-        .t-closed       { color: var(--muted); }
-        .t-service      { color: #ff6b6b; }
-
-        /* ── ALERT PANEL ── */
-        .alert-panel {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .alert-title {
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            color: var(--red);
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .alert-item {
-            background: var(--panel);
-            border-left: 3px solid var(--red);
-            padding: 6px 8px;
-            border-radius: 0 3px 3px 0;
-            font-size: 0.61rem;
-        }
-        .alert-item.warn { border-left-color: var(--orange); }
-        .alert-item.info { border-left-color: var(--accent); }
-        .alert-item.good { border-left-color: var(--green); }
+        .alert-panel { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+        .alert-title { font-size: 0.58rem; letter-spacing: 2px; color: var(--red); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+        .alert-item { background: var(--panel); border-left: 3px solid var(--red); padding: 6px 8px; border-radius: 0 3px 3px 0; font-size: 0.61rem; }
+        .alert-item.warn { border-left-color: var(--orange); } .alert-item.info { border-left-color: var(--accent); } .alert-item.good { border-left-color: var(--green); }
         .a-head { font-weight: 700; margin-bottom: 2px; }
         .alert-item:not(.warn):not(.info):not(.good) .a-head { color: var(--red); }
-        .alert-item.warn .a-head { color: var(--orange); }
-        .alert-item.info .a-head { color: var(--accent); }
-        .alert-item.good .a-head { color: var(--green); }
+        .alert-item.warn .a-head { color: var(--orange); } .alert-item.info .a-head { color: var(--accent); } .alert-item.good .a-head { color: var(--green); }
         .a-sub { color: var(--muted); font-size: 0.57rem; }
 
-        #live-clock { font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
+        /* ── DATA TABLES ── */
+        .filter-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+        .filter-bar input, .filter-bar select { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 4px; font-size: 0.66rem; font-family: inherit; outline: none; }
+        .filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent); }
+        .filter-bar label { font-size: 0.56rem; color: var(--muted); letter-spacing: 1px; }
+
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.65rem; }
+        .data-table thead tr { border-bottom: 2px solid var(--border); }
+        .data-table th { padding: 7px 8px; text-align: left; font-size: 0.54rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+        .data-table tbody tr { border-bottom: 1px solid rgba(26,45,69,0.5); }
+        .data-table tbody tr:hover { background: var(--panel); }
+        .data-table td { padding: 7px 8px; vertical-align: middle; }
+        .td-id { color: var(--accent); font-weight: 700; font-size: 0.62rem; }
+        .td-name { color: var(--text); }
+        .td-beat { color: var(--gold); font-weight: 600; font-size: 0.62rem; }
+        .td-muted { color: var(--muted); font-size: 0.6rem; }
+        .td-amt { color: var(--gold); font-weight: 700; }
+        .td-actions { display: flex; gap: 4px; justify-content: flex-end; }
+
+        .status-badge { display: inline-block; border-radius: 3px; padding: 2px 8px; font-size: 0.58rem; font-weight: 700; letter-spacing: 1px; }
+        .sb-active   { background: #003d1f; color: #00e676; border: 1px solid #00e676; }
+        .sb-trial    { background: #001a2a; color: var(--accent); border: 1px solid var(--accent); }
+        .sb-closed   { background: #1a1a1a; color: var(--muted); border: 1px solid #2a2a2a; }
+        .sb-due      { background: #3d1500; color: var(--orange); border: 1px solid var(--orange); }
+        .sb-received { background: #003d1f; color: #00e676; border: 1px solid #00e676; }
+        .sb-hold     { background: #3d2000; color: #ff9800; border: 1px solid #ff9800; }
+        .sb-cut      { background: #3d0010; color: #ff3d57; border: 1px solid #ff3d57; }
+        .sb-deferred { background: #1a1a2a; color: var(--purple); border: 1px solid var(--purple); }
+        .sb-open     { background: #3d0010; color: #ff3d57; }
+        .sb-pending  { background: #3d2000; color: #ff9800; }
+        .sb-resolved { background: #003d1f; color: #00e676; }
+
+        /* ── STAT ROW ── */
+        .stat-row { display: grid; gap: 10px; margin-bottom: 12px; }
+        .stat-row-4 { grid-template-columns: repeat(4, 1fr); }
+        .stat-row-5 { grid-template-columns: repeat(5, 1fr); }
+        .stat-row-6 { grid-template-columns: repeat(6, 1fr); }
+        .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 5px; padding: 10px 12px; }
+        .stat-lbl { font-size: 0.54rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+        .stat-val { font-size: 1rem; font-weight: 700; }
+        .sv-accent { color: var(--accent); } .sv-gold { color: var(--gold); } .sv-green { color: var(--green); }
+        .sv-red    { color: var(--red); }    .sv-orange { color: var(--orange); }
+
+        /* ── MODAL ── */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: none; z-index: 100; align-items: center; justify-content: center; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; width: 560px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+        .modal-title { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
+        .modal-title.accent { color: var(--accent); } .modal-title.gold { color: var(--gold); }
+        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        .modal-grid.single { grid-template-columns: 1fr; }
+        .modal-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+
+        .table-wrap { overflow-x: auto; }
+        .empty-state { text-align: center; padding: 24px; color: var(--muted); font-size: 0.66rem; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- ── TOP BAR ── -->
 <div class="topbar">
-    <div class="topbar-brand">TOPS <span>CRM</span> // COMMAND CENTER</div>
-    <div style="display:flex;gap:28px;align-items:center;">
+    <div>
+        <div class="topbar-brand">TOPS <span>CRM</span> // COMMAND CENTER</div>
+        <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;letter-spacing:1px;">SINGLE SOURCE OF TRUTH — PAYMENT · FEEDBACK · SERVICE INTELLIGENCE</div>
+    </div>
+    <div class="topbar-right">
         <div class="topbar-meta" style="text-align:center;">
-            <strong>SINGLE SOURCE OF TRUTH</strong><br>
-            Payment · Feedback · Service Intelligence
+            <strong id="stat-total">7,240</strong> TOTAL &nbsp;|&nbsp;
+            <span style="color:var(--green);font-weight:700;" id="stat-active">6,810</span> ACTIVE &nbsp;|&nbsp;
+            <span style="color:var(--accent);font-weight:700;" id="stat-trial">215</span> TRIAL &nbsp;|&nbsp;
+            <span style="color:var(--red);font-weight:700;" id="stat-closed">215</span> CLOSED
         </div>
-        <div class="topbar-meta" style="text-align:right;">
+        <div class="topbar-meta">
             <strong id="live-clock">--:--:--</strong><br>
-            UNIVERSAL HUB v2.0 — FINAL LOCKED
-        </div>
-        <div class="topbar-meta" style="text-align:right;">
-            <strong>7,240</strong> TOTAL UNITS<br>
-            <span style="color:var(--green);">6,810 ACTIVE</span>
+            FINAL LOCKED v2.0
         </div>
     </div>
 </div>
 
-<div class="main">
+<!-- ── TAB NAV ── -->
+<div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('dashboard')">DASHBOARD</button>
+    <button class="tab-btn" onclick="switchTab('unit-master')">UNIT MASTER</button>
+    <button class="tab-btn" onclick="switchTab('payment-master')">PAYMENT MASTER</button>
+    <button class="tab-btn" onclick="switchTab('feedback-engine')">FEEDBACK ENGINE</button>
+</div>
 
-    <!-- ── HUD: 12 CARDS ── -->
+<!-- ════════════════════════════════════════ -->
+<!-- TAB 1: DASHBOARD                        -->
+<!-- ════════════════════════════════════════ -->
+<div id="tab-dashboard" class="tab-content active">
+
+    <!-- HUD: 12 CARDS -->
     <div>
         <div class="section-label">TOP HUD — UNIT INTELLIGENCE (12 CARDS)</div>
         <div class="hud-grid">
 
-            <!-- CARD 1: CRM Admin -->
+            <!-- Card 1: CRM Admin -->
             <div class="hud-card card-admin">
-                <div class="card-title">CRM ADMIN</div>
-                <div class="admin-row"><span class="lbl">TOTAL UNITS</span><span class="val">7,240</span></div>
-                <div class="admin-row"><span class="lbl">ACTIVE</span><span class="val val-green">6,810</span></div>
-                <div class="admin-row"><span class="lbl">TRIAL</span><span class="val" style="color:var(--accent)">215</span></div>
-                <div class="admin-row"><span class="lbl">CLOSED</span><span class="val val-red">215</span></div>
+                <div class="hud-title">CRM ADMIN</div>
+                <div class="admin-row"><span class="lbl">TOTAL UNITS</span><span class="val" id="hud-total">7,240</span></div>
+                <div class="admin-row"><span class="lbl">ACTIVE</span><span class="val vg" id="hud-active">6,810</span></div>
+                <div class="admin-row"><span class="lbl">TRIAL</span><span class="val" style="color:var(--accent)" id="hud-trial">215</span></div>
+                <div class="admin-row"><span class="lbl">CLOSED</span><span class="val vr" id="hud-closed">215</span></div>
             </div>
 
-            <!-- CARDS 2–11: Beat 01–10 -->
-            <!-- Beat codes: AU=Active Units, UC=Unit Closed, APP=Appreciation, CMP=Complaint, PAY=Payment Issues, RSA=RSA Feedback -->
-
+            <!-- Cards 2–11: Beat 01–10 | Codes: AU UC APP CMP PAY RSA -->
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 01</div>
-                <div class="card-officer">ID11 AMIT</div>
+                <div class="hud-title">BEAT 01</div><div class="hud-officer">ID11 AMIT</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">724</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">05</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">12</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">03</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">04</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">15</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">08</span></div>
                 </div>
                 <div class="perf-pill perf-good">PERF 82%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 02</div>
-                <div class="card-officer">ID12 RAHUL</div>
+                <div class="hud-title">BEAT 02</div><div class="hud-officer">ID12 RAHUL</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">681</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">03</span></div>
@@ -430,163 +370,123 @@
                 </div>
                 <div class="perf-pill perf-excellent">PERF 91%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 03</div>
-                <div class="card-officer">ID13 SURESH</div>
+                <div class="hud-title">BEAT 03</div><div class="hud-officer">ID13 SURESH</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">698</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">08</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">04</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">07</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">09</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">06</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">03</span></div>
                 </div>
                 <div class="perf-pill perf-average">PERF 68%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 04</div>
-                <div class="card-officer">ID14 PRIYA</div>
+                <div class="hud-title">BEAT 04</div><div class="hud-officer">ID14 PRIYA</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">712</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">04</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">14</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">02</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">03</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">18</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">10</span></div>
                 </div>
                 <div class="perf-pill perf-excellent">PERF 88%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 05</div>
-                <div class="card-officer">ID15 VIKRAM</div>
+                <div class="hud-title">BEAT 05</div><div class="hud-officer">ID15 VIKRAM</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">654</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">11</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">02</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">09</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">12</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">05</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">01</span></div>
                 </div>
                 <div class="perf-pill perf-critical">PERF 54%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 06</div>
-                <div class="card-officer">ID16 NEHA</div>
+                <div class="hud-title">BEAT 06</div><div class="hud-officer">ID16 NEHA</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">731</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">02</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">20</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">00</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">01</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">21</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">14</span></div>
                 </div>
                 <div class="perf-pill perf-excellent">PERF 96%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 07</div>
-                <div class="card-officer">ID17 ARJUN</div>
+                <div class="hud-title">BEAT 07</div><div class="hud-officer">ID17 ARJUN</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">688</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">06</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">08</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">04</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">05</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">13</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">06</span></div>
                 </div>
                 <div class="perf-pill perf-good">PERF 78%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 08</div>
-                <div class="card-officer">ID18 SONIA</div>
+                <div class="hud-title">BEAT 08</div><div class="hud-officer">ID18 SONIA</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">702</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">07</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">06</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">05</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">07</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">10</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">05</span></div>
                 </div>
                 <div class="perf-pill perf-average">PERF 72%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 09</div>
-                <div class="card-officer">ID19 MOHAN</div>
+                <div class="hud-title">BEAT 09</div><div class="hud-officer">ID19 MOHAN</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">668</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">09</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">03</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">08</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">10</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">07</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">02</span></div>
                 </div>
                 <div class="perf-pill perf-average">PERF 62%</div>
             </div>
-
             <div class="hud-card card-beat">
-                <div class="card-title">BEAT 10</div>
-                <div class="card-officer">ID20 KAVYA</div>
+                <div class="hud-title">BEAT 10</div><div class="hud-officer">ID20 KAVYA</div>
                 <div class="beat-kpis">
                     <div class="kpi-item"><span class="kc">AU</span><span class="kv neu">752</span></div>
                     <div class="kpi-item"><span class="kc">UC</span><span class="kv neg">02</span></div>
                     <div class="kpi-item"><span class="kc">APP</span><span class="kv pos">16</span></div>
                     <div class="kpi-item"><span class="kc">CMP</span><span class="kv neg">01</span></div>
                     <div class="kpi-item"><span class="kc">PAY</span><span class="kv neg">02</span></div>
-                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">19</span></div>
+                    <div class="kpi-item"><span class="kc">RSA</span><span class="kv pos">12</span></div>
                 </div>
                 <div class="perf-pill perf-excellent">PERF 94%</div>
             </div>
 
-            <!-- CARD 12: Management Summary -->
+            <!-- Card 12: Management Summary -->
             <div class="hud-card card-mgmt">
-                <div class="card-title">MANAGEMENT SUMMARY</div>
-                <div class="mgmt-row">
-                    <span class="lbl">BEST BEAT</span>
-                    <span class="val val-green">BEAT 06 — 96%</span>
-                </div>
-                <div class="mgmt-row">
-                    <span class="lbl">LOWEST BEAT</span>
-                    <span class="val val-red">BEAT 05 — 54%</span>
-                </div>
-                <div class="mgmt-row">
-                    <span class="lbl">OPEN COMPLAINTS</span>
-                    <span class="val val-orange">30</span>
-                </div>
-                <div class="mgmt-row">
-                    <span class="lbl">OUTSTANDING AMT</span>
-                    <span class="val val-gold">₹2,80,000</span>
-                </div>
-                <div class="mgmt-row">
-                    <span class="lbl">HIGH RISK UNITS</span>
-                    <span class="val val-red">142</span>
-                </div>
+                <div class="hud-title">MGMT SUMMARY</div>
+                <div class="mgmt-row"><span class="lbl">BEST BEAT</span><span class="val vg">BEAT 06 — 96%</span></div>
+                <div class="mgmt-row"><span class="lbl">LOWEST BEAT</span><span class="val vr">BEAT 05 — 54%</span></div>
+                <div class="mgmt-row"><span class="lbl">OPEN COMPLAINTS</span><span class="val vo">30</span></div>
+                <div class="mgmt-row"><span class="lbl">OUTSTANDING</span><span class="val vau">₹2,80,000</span></div>
+                <div class="mgmt-row"><span class="lbl">HIGH RISK UNITS</span><span class="val vr">142</span></div>
             </div>
 
         </div>
     </div>
 
-    <!-- ── STRIP BARS ── -->
+    <!-- STRIPS -->
     <div>
         <div class="section-label">INTELLIGENCE STRIPS</div>
         <div class="strips">
-
-            <!-- STRIP 1: Payment -->
             <div class="strip strip-pay">
                 <div class="strip-title">STRIP 1 — PAYMENT</div>
-                <div class="strip-codes">
-                    <span class="code-badge">PD 150</span>
-                    <span class="code-badge">PV 45</span>
-                    <span class="code-badge">DF 12</span>
-                    <span class="code-badge">PH 04</span>
-                    <span class="code-badge">PC 06</span>
-                    <span class="code-badge">OUT ₹2.8L</span>
-                </div>
+                <div class="strip-codes"><span class="code-badge">PD 150</span><span class="code-badge">PV 45</span><span class="code-badge">DF 12</span><span class="code-badge">PH 04</span><span class="code-badge">PC 06</span><span class="code-badge">OUT ₹2.8L</span></div>
                 <table class="strip-table">
                     <tr><td>PD</td><td>Payment Due</td><td>150</td></tr>
                     <tr><td>PV</td><td>Payment Received</td><td>45</td></tr>
@@ -596,18 +496,9 @@
                     <tr><td>OUT</td><td>Outstanding Amount</td><td>₹2,80,000</td></tr>
                 </table>
             </div>
-
-            <!-- STRIP 2: Client Feedback -->
             <div class="strip strip-fb">
                 <div class="strip-title">STRIP 2 — CLIENT FEEDBACK</div>
-                <div class="strip-codes">
-                    <span class="code-badge">APP 40</span>
-                    <span class="code-badge">CMP 08</span>
-                    <span class="code-badge">RES 25</span>
-                    <span class="code-badge">ISS 15</span>
-                    <span class="code-badge">RSA 12</span>
-                    <span class="code-badge">RRT 09</span>
-                </div>
+                <div class="strip-codes"><span class="code-badge">APP 40</span><span class="code-badge">CMP 08</span><span class="code-badge">RES 25</span><span class="code-badge">ISS 15</span><span class="code-badge">RSA 12</span><span class="code-badge">RRT 09</span></div>
                 <table class="strip-table">
                     <tr><td>APP</td><td>Appreciation</td><td>40</td></tr>
                     <tr><td>CMP</td><td>Complaint</td><td>08</td></tr>
@@ -617,18 +508,9 @@
                     <tr><td>RRT</td><td>Rapid Response Feedback</td><td>09</td></tr>
                 </table>
             </div>
-
-            <!-- STRIP 3: Responsibility Matrix -->
             <div class="strip strip-resp">
-                <div class="strip-title">STRIP 3 — RESPONSIBILITY MATRIX</div>
-                <div class="strip-codes">
-                    <span class="code-badge">QRT 18</span>
-                    <span class="code-badge">MKT 06</span>
-                    <span class="code-badge">ACC 04</span>
-                    <span class="code-badge">ADM 02</span>
-                    <span class="code-badge">CLI 11</span>
-                    <span class="code-badge">TEC 03</span>
-                </div>
+                <div class="strip-title">STRIP 3 — RESPONSIBILITY</div>
+                <div class="strip-codes"><span class="code-badge">QRT 18</span><span class="code-badge">MKT 06</span><span class="code-badge">ACC 04</span><span class="code-badge">ADM 02</span><span class="code-badge">CLI 11</span><span class="code-badge">TEC 03</span></div>
                 <table class="strip-table">
                     <tr><td>QRT</td><td>QRT Team</td><td>18</td></tr>
                     <tr><td>MKT</td><td>Marketing Team</td><td>06</td></tr>
@@ -638,301 +520,807 @@
                     <tr><td>TEC</td><td>Technical Team</td><td>03</td></tr>
                 </table>
             </div>
-
         </div>
     </div>
 
-    <!-- ── UNIVERSAL REMARK ENGINE ── -->
+    <!-- REMARK ENGINE -->
     <div>
         <div class="section-label">UNIVERSAL REMARK ENGINE — SINGLE ENTRY → AUTO UPDATE ALL COUNTERS</div>
         <div class="remark-engine">
             <div class="remark-title">ONE REMARK. EVERY COUNTER UPDATES AUTOMATICALLY.</div>
-            <div class="remark-form">
+            <div class="remark-form-grid">
+                <div class="form-group">
+                    <label>Unit ID</label>
+                    <select id="re-unit"><option value="">— Select Unit —</option></select>
+                </div>
                 <div class="form-group">
                     <label>Feedback Type</label>
-                    <select id="feedback-type">
+                    <select id="re-type">
                         <option value="">— Select Type —</option>
                         <optgroup label="POSITIVE">
-                            <option value="Appreciation">Appreciation</option>
-                            <option value="Emergency Response Feedback">Emergency Response Feedback</option>
-                            <option value="RSA Feedback">RSA Feedback</option>
-                            <option value="Rapid Response Feedback">Rapid Response Feedback</option>
-                            <option value="Trial Converted">Trial Converted</option>
+                            <option>Appreciation</option>
+                            <option>Emergency Response Feedback</option>
+                            <option>RSA Feedback</option>
+                            <option>Rapid Response Feedback</option>
+                            <option>Trial Converted</option>
                         </optgroup>
                         <optgroup label="SERVICE">
-                            <option value="Complaint">Complaint</option>
-                            <option value="Service Issue">Service Issue</option>
+                            <option>Complaint</option>
+                            <option>Service Issue</option>
                         </optgroup>
                         <optgroup label="PAYMENT">
-                            <option value="Payment Issue">Payment Issue</option>
-                            <option value="Payment Hold">Payment Hold</option>
-                            <option value="Payment Received">Payment Received</option>
+                            <option>Payment Issue</option>
+                            <option>Payment Hold</option>
+                            <option>Payment Received</option>
                         </optgroup>
                         <optgroup label="UNIT STATUS">
-                            <option value="Trial Failed">Trial Failed</option>
-                            <option value="Unit Closed">Unit Closed</option>
+                            <option>Trial Failed</option>
+                            <option>Unit Closed</option>
                         </optgroup>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Responsibility</label>
-                    <select id="resp-select">
+                    <select id="re-resp">
                         <option value="">— Select —</option>
-                        <option>QRT</option>
-                        <option>Marketing</option>
-                        <option>Accounts</option>
-                        <option>Admin</option>
-                        <option>Client</option>
-                        <option>Technical</option>
+                        <option>QRT</option><option>Marketing</option><option>Accounts</option>
+                        <option>Admin</option><option>Client</option><option>Technical</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Status</label>
-                    <select id="status-select">
+                    <select id="re-status">
                         <option value="">— Select —</option>
-                        <option>Open</option>
-                        <option>Pending</option>
-                        <option>Resolved</option>
-                        <option>Closed</option>
+                        <option>Open</option><option>Pending</option><option>Resolved</option><option>Closed</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Beat</label>
-                    <select id="beat-select">
-                        <option value="">— Beat —</option>
-                        <option>BEAT 01</option>
-                        <option>BEAT 02</option>
-                        <option>BEAT 03</option>
-                        <option>BEAT 04</option>
-                        <option>BEAT 05</option>
-                        <option>BEAT 06</option>
-                        <option>BEAT 07</option>
-                        <option>BEAT 08</option>
-                        <option>BEAT 09</option>
-                        <option>BEAT 10</option>
-                    </select>
+                    <label>Date</label>
+                    <input type="date" id="re-date">
                 </div>
+                <div class="form-group">
+                    <label>Updated By</label>
+                    <input type="text" id="re-by" placeholder="Admin name">
+                </div>
+            </div>
+            <div class="remark-form-grid-2">
                 <div class="form-group">
                     <label>Short Remark</label>
-                    <input id="remark-text" type="text" placeholder="e.g. Client requested 15 day payment extension">
+                    <input type="text" id="re-remark" placeholder="e.g. Client requested 15 day payment extension">
                 </div>
-                <button class="submit-btn" onclick="submitRemark()">LOG</button>
+                <div></div><div></div><div></div>
+                <button class="btn-primary" onclick="submitRemark()">LOG REMARK</button>
             </div>
-            <div id="counter-preview" class="counter-preview"></div>
+            <div id="re-preview" class="counter-preview"></div>
         </div>
     </div>
 
-    <!-- ── BOTTOM ROW ── -->
+    <!-- BOTTOM ROW -->
     <div class="bottom-row">
-
         <div class="activity-feed">
-            <div class="feed-title">RECENT ACTIVITY LOG</div>
+            <div class="feed-title">RECENT ACTIVITY — FEEDBACK ENGINE LOG</div>
             <div class="feed-header">
-                <span>TIME</span><span>BEAT</span><span>FEEDBACK TYPE</span>
-                <span>RESP</span><span>REMARK</span><span>STATUS</span>
+                <span>TIME</span><span>UNIT</span><span>BEAT</span><span>TYPE</span><span>RESP</span><span>REMARK</span><span>STATUS</span>
             </div>
             <div class="feed-list" id="feed-list">
                 <div class="feed-item">
-                    <span class="f-time">09:42</span>
-                    <span class="f-beat">BEAT 06</span>
-                    <span class="f-type t-appreciation">Appreciation</span>
-                    <span class="f-resp">CLIENT</span>
-                    <span class="f-note">Very happy with this month's service</span>
-                    <span class="f-status status-resolved">RESOLVED</span>
+                    <span class="f-time">09:42</span><span class="f-unit">U-0043</span><span class="f-beat">BEAT 06</span>
+                    <span class="t-appreciation">Appreciation</span><span class="f-resp">CLIENT</span>
+                    <span class="f-note">Very happy with this month's service</span><span class="f-status s-resolved">RESOLVED</span>
                 </div>
                 <div class="feed-item">
-                    <span class="f-time">09:31</span>
-                    <span class="f-beat">BEAT 05</span>
-                    <span class="f-type t-complaint">Complaint</span>
-                    <span class="f-resp">QRT</span>
-                    <span class="f-note">Guard absent at night shift</span>
-                    <span class="f-status status-open">OPEN</span>
+                    <span class="f-time">09:31</span><span class="f-unit">U-0127</span><span class="f-beat">BEAT 05</span>
+                    <span class="t-complaint">Complaint</span><span class="f-resp">QRT</span>
+                    <span class="f-note">Guard absent at night shift</span><span class="f-status s-open">OPEN</span>
                 </div>
                 <div class="feed-item">
-                    <span class="f-time">09:18</span>
-                    <span class="f-beat">BEAT 02</span>
-                    <span class="f-type t-payment">Payment Received</span>
-                    <span class="f-resp">ACCOUNTS</span>
-                    <span class="f-note">Full payment cleared for June cycle</span>
-                    <span class="f-status status-resolved">RESOLVED</span>
+                    <span class="f-time">09:18</span><span class="f-unit">U-0088</span><span class="f-beat">BEAT 02</span>
+                    <span class="t-payment">Payment Received</span><span class="f-resp">ACCOUNTS</span>
+                    <span class="f-note">Full payment cleared for June cycle</span><span class="f-status s-resolved">RESOLVED</span>
                 </div>
                 <div class="feed-item">
-                    <span class="f-time">09:05</span>
-                    <span class="f-beat">BEAT 03</span>
-                    <span class="f-type t-service">Service Issue</span>
-                    <span class="f-resp">TEC</span>
-                    <span class="f-note">CCTV offline since yesterday evening</span>
-                    <span class="f-status status-pending">PENDING</span>
+                    <span class="f-time">09:05</span><span class="f-unit">U-0215</span><span class="f-beat">BEAT 03</span>
+                    <span class="t-service">Service Issue</span><span class="f-resp">TEC</span>
+                    <span class="f-note">CCTV offline since yesterday evening</span><span class="f-status s-pending">PENDING</span>
                 </div>
                 <div class="feed-item">
-                    <span class="f-time">08:52</span>
-                    <span class="f-beat">BEAT 10</span>
-                    <span class="f-type t-appreciation">Appreciation</span>
-                    <span class="f-resp">QRT</span>
-                    <span class="f-note">Client appreciated rapid response last night</span>
-                    <span class="f-status status-closed">CLOSED</span>
+                    <span class="f-time">08:52</span><span class="f-unit">U-0301</span><span class="f-beat">BEAT 10</span>
+                    <span class="t-rsa">RSA Feedback</span><span class="f-resp">QRT</span>
+                    <span class="f-note">Rapid response appreciated — under 8 mins</span><span class="f-status s-resolved">RESOLVED</span>
                 </div>
                 <div class="feed-item">
-                    <span class="f-time">08:40</span>
-                    <span class="f-beat">BEAT 01</span>
-                    <span class="f-type t-trial">Trial Converted</span>
-                    <span class="f-resp">MKT</span>
-                    <span class="f-note">New client — 3-year contract signed</span>
-                    <span class="f-status status-resolved">RESOLVED</span>
+                    <span class="f-time">08:40</span><span class="f-unit">U-0004</span><span class="f-beat">BEAT 01</span>
+                    <span class="t-trial">Trial Converted</span><span class="f-resp">MKT</span>
+                    <span class="f-note">New client — 3-year contract signed</span><span class="f-status s-resolved">RESOLVED</span>
                 </div>
                 <div class="feed-item">
-                    <span class="f-time">08:21</span>
-                    <span class="f-beat">BEAT 05</span>
-                    <span class="f-type t-payment">Payment Hold</span>
-                    <span class="f-resp">CLIENT</span>
-                    <span class="f-note">Client requested 15 day extension</span>
-                    <span class="f-status status-pending">PENDING</span>
+                    <span class="f-time">08:21</span><span class="f-unit">U-0183</span><span class="f-beat">BEAT 05</span>
+                    <span class="t-payment">Payment Hold</span><span class="f-resp">CLIENT</span>
+                    <span class="f-note">Client requested 15 day extension</span><span class="f-status s-pending">PENDING</span>
                 </div>
                 <div class="feed-item">
-                    <span class="f-time">08:10</span>
-                    <span class="f-beat">BEAT 04</span>
-                    <span class="f-type t-rsa">RSA Feedback</span>
-                    <span class="f-resp">QRT</span>
-                    <span class="f-note">RSA team responded in under 8 minutes</span>
-                    <span class="f-status status-resolved">RESOLVED</span>
-                </div>
-                <div class="feed-item">
-                    <span class="f-time">07:55</span>
-                    <span class="f-beat">BEAT 09</span>
-                    <span class="f-type t-complaint">Complaint</span>
-                    <span class="f-resp">QRT</span>
-                    <span class="f-note">Gate guard sleeping — reported by client</span>
-                    <span class="f-status status-open">OPEN</span>
+                    <span class="f-time">07:55</span><span class="f-unit">U-0092</span><span class="f-beat">BEAT 09</span>
+                    <span class="t-complaint">Complaint</span><span class="f-resp">QRT</span>
+                    <span class="f-note">Gate guard sleeping — reported by client</span><span class="f-status s-open">OPEN</span>
                 </div>
             </div>
         </div>
-
         <div class="alert-panel">
             <div class="alert-title">SYSTEM ALERTS</div>
-            <div class="alert-item">
-                <div class="a-head">BEAT 05 — CRITICAL</div>
-                <div class="a-sub">PERF 54% — 3rd consecutive low week</div>
-            </div>
-            <div class="alert-item warn">
-                <div class="a-head">142 HIGH RISK UNITS</div>
-                <div class="a-sub">Overdue >60 days — escalation required</div>
-            </div>
-            <div class="alert-item warn">
-                <div class="a-head">OUT ₹2.8L OUTSTANDING</div>
-                <div class="a-sub">6 payment cuts at risk this cycle</div>
-            </div>
-            <div class="alert-item warn">
-                <div class="a-head">30 OPEN COMPLAINTS</div>
-                <div class="a-sub">Beats 03, 05, 09 — action needed today</div>
-            </div>
-            <div class="alert-item good">
-                <div class="a-head">BEAT 06 — BEST MONTH</div>
-                <div class="a-sub">Zero complaints, APP 20 — share practices</div>
-            </div>
-            <div class="alert-item info">
-                <div class="a-head">215 TRIAL UNITS ACTIVE</div>
-                <div class="a-sub">Conversion target: 60% this month</div>
-            </div>
+            <div class="alert-item"><div class="a-head">BEAT 05 — CRITICAL</div><div class="a-sub">PERF 54% — 3rd consecutive low week</div></div>
+            <div class="alert-item warn"><div class="a-head">142 HIGH RISK UNITS</div><div class="a-sub">Overdue >60 days — escalation needed</div></div>
+            <div class="alert-item warn"><div class="a-head">OUT ₹2.8L OUTSTANDING</div><div class="a-sub">6 payment cuts at risk this cycle</div></div>
+            <div class="alert-item warn"><div class="a-head">30 OPEN COMPLAINTS</div><div class="a-sub">Beats 03, 05, 09 — action today</div></div>
+            <div class="alert-item good"><div class="a-head">BEAT 06 — BEST MONTH</div><div class="a-sub">Zero complaints, APP 20 — share practices</div></div>
+            <div class="alert-item info"><div class="a-head">215 TRIALS ACTIVE</div><div class="a-sub">Conversion target: 60% this month</div></div>
         </div>
-
     </div>
 
+</div><!-- /tab-dashboard -->
+
+
+<!-- ════════════════════════════════════════ -->
+<!-- TAB 2: UNIT MASTER                      -->
+<!-- ════════════════════════════════════════ -->
+<div id="tab-unit-master" class="tab-content">
+
+    <div class="stat-row stat-row-4">
+        <div class="stat-card"><div class="stat-lbl">Total Units</div><div class="stat-val sv-accent" id="um-total">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Active</div><div class="stat-val sv-green" id="um-active">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Trial</div><div class="stat-val sv-accent" id="um-trial">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Closed</div><div class="stat-val sv-red" id="um-closed">0</div></div>
+    </div>
+
+    <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="card-title gold" style="margin-bottom:0;">UNIT_MASTER — ALL UNITS</div>
+            <button class="btn-primary" onclick="openUnitModal()">+ ADD UNIT</button>
+        </div>
+        <div class="filter-bar">
+            <label>Search:</label>
+            <input type="text" id="um-search" placeholder="Unit ID / Site / Client" oninput="renderUnits()">
+            <label>Beat:</label>
+            <select id="um-filter-beat" onchange="renderUnits()">
+                <option value="">All Beats</option>
+                <option>BEAT 01</option><option>BEAT 02</option><option>BEAT 03</option><option>BEAT 04</option><option>BEAT 05</option>
+                <option>BEAT 06</option><option>BEAT 07</option><option>BEAT 08</option><option>BEAT 09</option><option>BEAT 10</option>
+            </select>
+            <label>Status:</label>
+            <select id="um-filter-status" onchange="renderUnits()">
+                <option value="">All</option><option>Active</option><option>Trial</option><option>Closed</option>
+            </select>
+            <button class="btn-ghost" onclick="exportUnitsCSV()">EXPORT CSV</button>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Unit ID</th><th>Site Name</th><th>Client Name</th><th>Beat</th>
+                        <th>QRT Officer</th><th>Field Exec</th><th>Subscription</th><th>Status</th><th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="units-tbody">
+                    <tr><td colspan="9" class="empty-state">No units added yet. Click + ADD UNIT.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div><!-- /tab-unit-master -->
+
+
+<!-- ════════════════════════════════════════ -->
+<!-- TAB 3: PAYMENT MASTER                   -->
+<!-- ════════════════════════════════════════ -->
+<div id="tab-payment-master" class="tab-content">
+
+    <div class="stat-row stat-row-5">
+        <div class="stat-card"><div class="stat-lbl">Payment Due</div><div class="stat-val sv-orange" id="pm-due">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Payment Received</div><div class="stat-val sv-green" id="pm-recv">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Deferred</div><div class="stat-val sv-accent" id="pm-def">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Payment Hold</div><div class="stat-val sv-orange" id="pm-hold">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Outstanding</div><div class="stat-val sv-gold" id="pm-out">₹0</div></div>
+    </div>
+
+    <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="card-title orange" style="margin-bottom:0;">PAYMENT_MASTER — BILLING & COLLECTIONS</div>
+            <button class="btn-primary" onclick="openPaymentModal()">+ ADD / UPDATE PAYMENT</button>
+        </div>
+        <div class="filter-bar">
+            <label>Search:</label>
+            <input type="text" id="pmt-search" placeholder="Unit ID / Client" oninput="renderPayments()">
+            <label>Status:</label>
+            <select id="pmt-filter-status" onchange="renderPayments()">
+                <option value="">All</option><option>Due</option><option>Received</option><option>Deferred</option><option>Hold</option><option>Cut</option>
+            </select>
+            <label>Beat:</label>
+            <select id="pmt-filter-beat" onchange="renderPayments()">
+                <option value="">All Beats</option>
+                <option>BEAT 01</option><option>BEAT 02</option><option>BEAT 03</option><option>BEAT 04</option><option>BEAT 05</option>
+                <option>BEAT 06</option><option>BEAT 07</option><option>BEAT 08</option><option>BEAT 09</option><option>BEAT 10</option>
+            </select>
+            <button class="btn-ghost" onclick="exportPaymentsCSV()">EXPORT CSV</button>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Unit ID</th><th>Client Name</th><th>Beat</th><th>Billing Cycle</th>
+                        <th style="text-align:right;">Current Bill</th><th style="text-align:right;">Outstanding</th>
+                        <th>Payment Status</th><th>Last Payment</th><th>Next Follow-up</th><th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="payments-tbody">
+                    <tr><td colspan="10" class="empty-state">No payment records. Add a unit first, then add payment details.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div><!-- /tab-payment-master -->
+
+
+<!-- ════════════════════════════════════════ -->
+<!-- TAB 4: FEEDBACK ENGINE                  -->
+<!-- ════════════════════════════════════════ -->
+<div id="tab-feedback-engine" class="tab-content">
+
+    <div class="stat-row stat-row-6">
+        <div class="stat-card"><div class="stat-lbl">Total Remarks</div><div class="stat-val sv-accent" id="fe-total">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Open</div><div class="stat-val sv-red" id="fe-open">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Pending</div><div class="stat-val sv-orange" id="fe-pending">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Resolved</div><div class="stat-val sv-green" id="fe-resolved">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Appreciations</div><div class="stat-val sv-green" id="fe-app">0</div></div>
+        <div class="stat-card"><div class="stat-lbl">Complaints</div><div class="stat-val sv-red" id="fe-cmp">0</div></div>
+    </div>
+
+    <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="card-title green" style="margin-bottom:0;">FEEDBACK_ENGINE — ALL REMARKS</div>
+            <button class="btn-primary" onclick="switchTab('dashboard');setTimeout(()=>document.getElementById('re-type').focus(),300);">+ NEW REMARK</button>
+        </div>
+        <div class="filter-bar">
+            <label>Type:</label>
+            <select id="fe-filter-type" onchange="renderFeedback()">
+                <option value="">All Types</option>
+                <option>Appreciation</option><option>Complaint</option><option>Service Issue</option>
+                <option>Emergency Response Feedback</option><option>RSA Feedback</option><option>Rapid Response Feedback</option>
+                <option>Payment Issue</option><option>Payment Hold</option><option>Payment Received</option>
+                <option>Trial Failed</option><option>Trial Converted</option><option>Unit Closed</option>
+            </select>
+            <label>Status:</label>
+            <select id="fe-filter-status" onchange="renderFeedback()">
+                <option value="">All</option><option>Open</option><option>Pending</option><option>Resolved</option><option>Closed</option>
+            </select>
+            <label>Beat:</label>
+            <select id="fe-filter-beat" onchange="renderFeedback()">
+                <option value="">All Beats</option>
+                <option>BEAT 01</option><option>BEAT 02</option><option>BEAT 03</option><option>BEAT 04</option><option>BEAT 05</option>
+                <option>BEAT 06</option><option>BEAT 07</option><option>BEAT 08</option><option>BEAT 09</option><option>BEAT 10</option>
+            </select>
+            <button class="btn-ghost" onclick="clearFEFilters()">CLEAR</button>
+            <button class="btn-ghost" onclick="exportFeedbackCSV()">EXPORT CSV</button>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th><th>Unit ID</th><th>Beat</th><th>Feedback Type</th>
+                        <th>Responsibility</th><th>Status</th><th>Updated By</th><th>Remark</th><th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="feedback-tbody">
+                    <tr><td colspan="9" class="empty-state">No feedback entries yet. Use the Remark Engine in Dashboard tab.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div><!-- /tab-feedback-engine -->
+
+
+<!-- ════════════════════════════════════════ -->
+<!-- MODALS                                  -->
+<!-- ════════════════════════════════════════ -->
+
+<!-- UNIT MODAL -->
+<div class="modal-overlay" id="unit-modal">
+    <div class="modal">
+        <div class="modal-title gold" id="unit-modal-title">ADD UNIT — UNIT_MASTER</div>
+        <div class="modal-grid">
+            <div class="form-group"><label>Unit ID</label><input type="text" id="um-id" placeholder="e.g. U-0001"></div>
+            <div class="form-group"><label>Site Name</label><input type="text" id="um-site" placeholder="e.g. Royal Residency"></div>
+            <div class="form-group"><label>Client Name</label><input type="text" id="um-client" placeholder="e.g. Mr. Sharma"></div>
+            <div class="form-group"><label>Beat Number</label>
+                <select id="um-beat">
+                    <option value="">— Select Beat —</option>
+                    <option>BEAT 01</option><option>BEAT 02</option><option>BEAT 03</option><option>BEAT 04</option><option>BEAT 05</option>
+                    <option>BEAT 06</option><option>BEAT 07</option><option>BEAT 08</option><option>BEAT 09</option><option>BEAT 10</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Assigned QRT Officer</label><input type="text" id="um-qrt" placeholder="e.g. ID11 Amit"></div>
+            <div class="form-group"><label>Assigned Field Executive</label><input type="text" id="um-exec" placeholder="e.g. FE-03 Ravi"></div>
+            <div class="form-group"><label>Subscription Type</label>
+                <select id="um-sub">
+                    <option value="">— Select —</option>
+                    <option>Guard Service</option><option>CCTV + Guard</option><option>CCTV Only</option>
+                    <option>RSA + Guard</option><option>Full Package</option><option>Custom</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Status</label>
+                <select id="um-status">
+                    <option>Active</option><option>Trial</option><option>Closed</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-primary" onclick="saveUnit()">SAVE UNIT</button>
+            <button class="btn-ghost" onclick="closeModal('unit-modal')">CANCEL</button>
+        </div>
+    </div>
 </div>
 
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payment-modal">
+    <div class="modal">
+        <div class="modal-title orange" id="payment-modal-title">ADD PAYMENT RECORD — PAYMENT_MASTER</div>
+        <div class="modal-grid">
+            <div class="form-group"><label>Unit ID</label><select id="pm-unit-id"><option value="">— Select Unit —</option></select></div>
+            <div class="form-group"><label>Billing Cycle</label>
+                <select id="pm-cycle">
+                    <option>Monthly</option><option>Quarterly</option><option>Half-Yearly</option><option>Annual</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Current Bill (₹)</label><input type="number" id="pm-bill" placeholder="e.g. 5000" min="0"></div>
+            <div class="form-group"><label>Outstanding (₹)</label><input type="number" id="pm-outstanding" placeholder="e.g. 0" min="0"></div>
+            <div class="form-group"><label>Payment Status</label>
+                <select id="pm-status">
+                    <option>Due</option><option>Received</option><option>Deferred</option><option>Hold</option><option>Cut</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Last Payment Date</label><input type="date" id="pm-last-date"></div>
+            <div class="form-group"><label>Next Follow-up Date</label><input type="date" id="pm-next-date"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-primary" onclick="savePayment()">SAVE PAYMENT</button>
+            <button class="btn-ghost" onclick="closeModal('payment-modal')">CANCEL</button>
+        </div>
+    </div>
+</div>
+
+
 <script>
-    // Live clock
-    function updateClock() {
+    // ── STORAGE KEYS ──
+    const K_UNITS    = 'tops_crm_units';
+    const K_PAYMENTS = 'tops_crm_payments';
+    const K_FEEDBACK = 'tops_crm_feedback';
+
+    const load = k => JSON.parse(localStorage.getItem(k) || '[]');
+    const save = (k, d) => localStorage.setItem(k, JSON.stringify(d));
+
+    // ── CLOCK ──
+    function tick() {
         document.getElementById('live-clock').textContent =
             new Date().toLocaleTimeString('en-IN', { hour12: false });
     }
-    updateClock();
-    setInterval(updateClock, 1000);
+    tick(); setInterval(tick, 1000);
 
-    // Auto-counter rules per Section 4 of Final Locked Architecture
-    const counterRules = {
-        'Appreciation':                 'APP +1 → Officer Positive Score +1 → Beat Positive +1',
-        'Emergency Response Feedback':  'APP +1 (Emergency) → QRT Positive +1 → Beat Positive +1 → RRT +1',
-        'RSA Feedback':                 'RSA +1 → QRT Positive +1 → Beat Positive +1',
-        'Rapid Response Feedback':      'RRT +1 → QRT Positive +1 → Beat Positive +1',
-        'Trial Converted':              'AU +1 → MKT Positive +1 → Beat Positive +1',
-        'Complaint':                    'CMP +1 → Beat Complaint Count +1 → Responsible Team Count +1',
-        'Service Issue':                'ISS +1 → Beat Complaint Count +1 → Responsible Team Count +1',
-        'Payment Issue':                'PAY +1 → ACC +1 → Beat Negative +1',
-        'Payment Hold':                 'PH +1 → CLI +1',
-        'Payment Received':             'PV +1 → ACC Positive +1',
-        'Trial Failed':                 'UC +1 → MKT +1 → Beat Negative +1',
-        'Unit Closed':                  'UC +1 → Root Cause Count +1 → [Reason: Payment / Service / Complaint / Client / Business / Trial]',
-    };
+    // Remark date default
+    document.getElementById('re-date').value = today();
+    function today() { return new Date().toISOString().split('T')[0]; }
+    function fmtDate(iso) { if (!iso) return '—'; const [y,m,d] = iso.split('-'); return `${d}-${m}-${y}`; }
 
-    document.getElementById('feedback-type').addEventListener('change', function () {
-        const el = document.getElementById('counter-preview');
-        if (this.value && counterRules[this.value]) {
-            el.textContent = '→ AUTO UPDATE: ' + counterRules[this.value];
-            el.className = 'counter-preview active';
+    // ── TAB SWITCH ──
+    function switchTab(name) {
+        document.querySelectorAll('.tab-btn').forEach((b,i) => {
+            b.classList.toggle('active', ['dashboard','unit-master','payment-master','feedback-engine'][i] === name);
+        });
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-' + name).classList.add('active');
+        if (name === 'unit-master')    { renderUnits();    renderUnitStats(); }
+        if (name === 'payment-master') { renderPayments(); renderPaymentStats(); }
+        if (name === 'feedback-engine'){ renderFeedback(); renderFeedbackStats(); }
+    }
+
+    // ── MODALS ──
+    let editUnitId    = null;
+    let editPaymentId = null;
+
+    function openUnitModal(id) {
+        editUnitId = id || null;
+        const modal = document.getElementById('unit-modal');
+        document.getElementById('unit-modal-title').textContent = id ? 'EDIT UNIT — UNIT_MASTER' : 'ADD UNIT — UNIT_MASTER';
+        if (id) {
+            const u = load(K_UNITS).find(x => x.id === id);
+            if (u) {
+                document.getElementById('um-id').value     = u.unitId;
+                document.getElementById('um-site').value   = u.siteName;
+                document.getElementById('um-client').value = u.clientName;
+                document.getElementById('um-beat').value   = u.beat;
+                document.getElementById('um-qrt').value    = u.qrtOfficer;
+                document.getElementById('um-exec').value   = u.fieldExec;
+                document.getElementById('um-sub').value    = u.subscriptionType;
+                document.getElementById('um-status').value = u.status;
+            }
         } else {
-            el.textContent = '';
-            el.className = 'counter-preview';
+            ['um-id','um-site','um-client','um-qrt','um-exec'].forEach(x => document.getElementById(x).value = '');
+            document.getElementById('um-beat').value   = '';
+            document.getElementById('um-sub').value    = '';
+            document.getElementById('um-status').value = 'Active';
         }
+        modal.classList.add('open');
+    }
+    function saveUnit() {
+        const unitId   = document.getElementById('um-id').value.trim().toUpperCase();
+        const siteName = document.getElementById('um-site').value.trim();
+        const client   = document.getElementById('um-client').value.trim();
+        const beat     = document.getElementById('um-beat').value;
+        const qrt      = document.getElementById('um-qrt').value.trim();
+        const exec     = document.getElementById('um-exec').value.trim();
+        const sub      = document.getElementById('um-sub').value;
+        const status   = document.getElementById('um-status').value;
+
+        if (!unitId || !siteName || !client || !beat) { alert('Unit ID, Site Name, Client Name, Beat are required.'); return; }
+
+        const units = load(K_UNITS);
+        if (editUnitId) {
+            const i = units.findIndex(x => x.id === editUnitId);
+            if (i > -1) units[i] = { ...units[i], unitId, siteName, clientName: client, beat, qrtOfficer: qrt, fieldExec: exec, subscriptionType: sub, status };
+        } else {
+            if (units.find(u => u.unitId === unitId)) { alert('Unit ID already exists.'); return; }
+            units.push({ id: Date.now(), unitId, siteName, clientName: client, beat, qrtOfficer: qrt, fieldExec: exec, subscriptionType: sub, status });
+        }
+        save(K_UNITS, units);
+        closeModal('unit-modal');
+        renderUnits(); renderUnitStats();
+        populateUnitSelects(); updateTopBarStats();
+    }
+    function deleteUnit(id) {
+        if (!confirm('Delete this unit?')) return;
+        save(K_UNITS, load(K_UNITS).filter(u => u.id !== id));
+        renderUnits(); renderUnitStats(); populateUnitSelects(); updateTopBarStats();
+    }
+
+    function openPaymentModal(id) {
+        editPaymentId = id || null;
+        const modal = document.getElementById('payment-modal');
+        document.getElementById('payment-modal-title').textContent = id ? 'EDIT PAYMENT RECORD' : 'ADD PAYMENT RECORD — PAYMENT_MASTER';
+        if (id) {
+            const p = load(K_PAYMENTS).find(x => x.id === id);
+            if (p) {
+                document.getElementById('pm-unit-id').value    = p.unitId;
+                document.getElementById('pm-cycle').value      = p.billingCycle;
+                document.getElementById('pm-bill').value       = p.currentBill;
+                document.getElementById('pm-outstanding').value= p.outstanding;
+                document.getElementById('pm-status').value     = p.paymentStatus;
+                document.getElementById('pm-last-date').value  = p.lastPaymentDate;
+                document.getElementById('pm-next-date').value  = p.nextFollowup;
+            }
+        } else {
+            ['pm-bill','pm-outstanding'].forEach(x => document.getElementById(x).value = '');
+            ['pm-last-date','pm-next-date'].forEach(x => document.getElementById(x).value = '');
+            document.getElementById('pm-unit-id').value = '';
+            document.getElementById('pm-cycle').value   = 'Monthly';
+            document.getElementById('pm-status').value  = 'Due';
+        }
+        modal.classList.add('open');
+    }
+    function savePayment() {
+        const unitSel = document.getElementById('pm-unit-id').value;
+        const bill    = parseFloat(document.getElementById('pm-bill').value);
+        const out     = parseFloat(document.getElementById('pm-outstanding').value) || 0;
+        if (!unitSel) { alert('Please select a Unit.'); return; }
+        if (isNaN(bill) || bill <= 0) { alert('Enter a valid Current Bill amount.'); return; }
+
+        const units   = load(K_UNITS);
+        const unit    = units.find(u => u.unitId === unitSel);
+        const pmts    = load(K_PAYMENTS);
+
+        const record = {
+            id:            editPaymentId || Date.now(),
+            unitId:        unitSel,
+            clientName:    unit ? unit.clientName : '—',
+            beat:          unit ? unit.beat : '—',
+            billingCycle:  document.getElementById('pm-cycle').value,
+            currentBill:   bill,
+            outstanding:   out,
+            paymentStatus: document.getElementById('pm-status').value,
+            lastPaymentDate: document.getElementById('pm-last-date').value,
+            nextFollowup:  document.getElementById('pm-next-date').value,
+        };
+        if (editPaymentId) {
+            const i = pmts.findIndex(x => x.id === editPaymentId);
+            if (i > -1) pmts[i] = record;
+        } else {
+            pmts.push(record);
+        }
+        save(K_PAYMENTS, pmts);
+        closeModal('payment-modal');
+        renderPayments(); renderPaymentStats();
+    }
+    function deletePayment(id) {
+        if (!confirm('Delete this payment record?')) return;
+        save(K_PAYMENTS, load(K_PAYMENTS).filter(p => p.id !== id));
+        renderPayments(); renderPaymentStats();
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('open');
+        editUnitId = null; editPaymentId = null;
+    }
+    document.querySelectorAll('.modal-overlay').forEach(m => {
+        m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
     });
 
-    // Type → CSS class map
-    const typeClass = {
-        'Appreciation':                't-appreciation',
-        'Emergency Response Feedback': 't-emergency',
-        'RSA Feedback':                't-rsa',
-        'Rapid Response Feedback':     't-rsa',
-        'Trial Converted':             't-trial',
-        'Complaint':                   't-complaint',
-        'Service Issue':               't-service',
-        'Payment Issue':               't-payment',
-        'Payment Hold':                't-payment',
-        'Payment Received':            't-payment',
-        'Trial Failed':                't-closed',
-        'Unit Closed':                 't-closed',
-    };
+    // ── POPULATE SELECTS ──
+    function populateUnitSelects() {
+        const units = load(K_UNITS);
+        const opts  = '<option value="">— Select Unit —</option>' + units.map(u => `<option value="${u.unitId}">${u.unitId} — ${u.siteName}</option>`).join('');
+        document.getElementById('re-unit').innerHTML     = opts;
+        document.getElementById('pm-unit-id').innerHTML  = '<option value="">— Select Unit —</option>' + units.map(u => `<option value="${u.unitId}">${u.unitId} — ${u.siteName}</option>`).join('');
+    }
 
-    // Status → CSS class map
-    const statusClass = {
-        'Open': 'status-open', 'Pending': 'status-pending',
-        'Resolved': 'status-resolved', 'Closed': 'status-closed',
+    // ── RENDER: UNIT MASTER ──
+    function renderUnits() {
+        let units = load(K_UNITS);
+        const q  = document.getElementById('um-search').value.toLowerCase();
+        const fb = document.getElementById('um-filter-beat').value;
+        const fs = document.getElementById('um-filter-status').value;
+        if (q)  units = units.filter(u => u.unitId.toLowerCase().includes(q) || u.siteName.toLowerCase().includes(q) || u.clientName.toLowerCase().includes(q));
+        if (fb) units = units.filter(u => u.beat === fb);
+        if (fs) units = units.filter(u => u.status === fs);
+
+        const tbody = document.getElementById('units-tbody');
+        if (!units.length) { tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No units match the filter.</td></tr>'; return; }
+        const sb = { Active: 'sb-active', Trial: 'sb-trial', Closed: 'sb-closed' };
+        tbody.innerHTML = units.map(u => `
+            <tr>
+                <td class="td-id">${u.unitId}</td>
+                <td class="td-name">${u.siteName}</td>
+                <td class="td-name">${u.clientName}</td>
+                <td class="td-beat">${u.beat}</td>
+                <td class="td-muted">${u.qrtOfficer || '—'}</td>
+                <td class="td-muted">${u.fieldExec || '—'}</td>
+                <td class="td-muted">${u.subscriptionType || '—'}</td>
+                <td><span class="status-badge ${sb[u.status] || 'sb-active'}">${u.status}</span></td>
+                <td><div class="td-actions">
+                    <button class="btn-edit" onclick="openUnitModal(${u.id})">EDIT</button>
+                    <button class="btn-danger" onclick="deleteUnit(${u.id})">DEL</button>
+                </div></td>
+            </tr>`).join('');
+    }
+    function renderUnitStats() {
+        const u = load(K_UNITS);
+        document.getElementById('um-total').textContent  = u.length;
+        document.getElementById('um-active').textContent = u.filter(x => x.status === 'Active').length;
+        document.getElementById('um-trial').textContent  = u.filter(x => x.status === 'Trial').length;
+        document.getElementById('um-closed').textContent = u.filter(x => x.status === 'Closed').length;
+    }
+
+    // ── RENDER: PAYMENT MASTER ──
+    function renderPayments() {
+        let pmts = load(K_PAYMENTS);
+        const q  = document.getElementById('pmt-search').value.toLowerCase();
+        const fs = document.getElementById('pmt-filter-status').value;
+        const fb = document.getElementById('pmt-filter-beat').value;
+        if (q)  pmts = pmts.filter(p => p.unitId.toLowerCase().includes(q) || p.clientName.toLowerCase().includes(q));
+        if (fs) pmts = pmts.filter(p => p.paymentStatus === fs);
+        if (fb) pmts = pmts.filter(p => p.beat === fb);
+
+        const tbody = document.getElementById('payments-tbody');
+        if (!pmts.length) { tbody.innerHTML = '<tr><td colspan="10" class="empty-state">No payment records match.</td></tr>'; return; }
+        const sb = { Due: 'sb-due', Received: 'sb-received', Hold: 'sb-hold', Cut: 'sb-cut', Deferred: 'sb-deferred' };
+        tbody.innerHTML = pmts.map(p => `
+            <tr>
+                <td class="td-id">${p.unitId}</td>
+                <td class="td-name">${p.clientName}</td>
+                <td class="td-beat">${p.beat}</td>
+                <td class="td-muted">${p.billingCycle}</td>
+                <td class="td-amt" style="text-align:right;">₹ ${Number(p.currentBill).toLocaleString()}</td>
+                <td class="td-amt" style="text-align:right;color:${p.outstanding > 0 ? 'var(--red)' : 'var(--green)'};">₹ ${Number(p.outstanding).toLocaleString()}</td>
+                <td><span class="status-badge ${sb[p.paymentStatus] || 'sb-due'}">${p.paymentStatus}</span></td>
+                <td class="td-muted">${fmtDate(p.lastPaymentDate)}</td>
+                <td class="td-muted">${fmtDate(p.nextFollowup)}</td>
+                <td><div class="td-actions">
+                    <button class="btn-edit" onclick="openPaymentModal(${p.id})">EDIT</button>
+                    <button class="btn-danger" onclick="deletePayment(${p.id})">DEL</button>
+                </div></td>
+            </tr>`).join('');
+    }
+    function renderPaymentStats() {
+        const p = load(K_PAYMENTS);
+        document.getElementById('pm-due').textContent  = p.filter(x => x.paymentStatus === 'Due').length;
+        document.getElementById('pm-recv').textContent = p.filter(x => x.paymentStatus === 'Received').length;
+        document.getElementById('pm-def').textContent  = p.filter(x => x.paymentStatus === 'Deferred').length;
+        document.getElementById('pm-hold').textContent = p.filter(x => x.paymentStatus === 'Hold').length;
+        const out = p.reduce((s, x) => s + (Number(x.outstanding) || 0), 0);
+        document.getElementById('pm-out').textContent = out > 0 ? '₹ ' + out.toLocaleString() : '₹0';
+    }
+
+    // ── RENDER: FEEDBACK ENGINE ──
+    function renderFeedback() {
+        let fb   = load(K_FEEDBACK);
+        const ft = document.getElementById('fe-filter-type').value;
+        const fs = document.getElementById('fe-filter-status').value;
+        const fb2= document.getElementById('fe-filter-beat').value;
+        if (ft)  fb = fb.filter(x => x.feedbackType === ft);
+        if (fs)  fb = fb.filter(x => x.status === fs);
+        if (fb2) fb = fb.filter(x => x.beat === fb2);
+
+        const tbody = document.getElementById('feedback-tbody');
+        if (!fb.length) { tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No feedback entries match.</td></tr>'; return; }
+        const sc = { Open: 'sb-open', Pending: 'sb-pending', Resolved: 'sb-resolved', Closed: 'sb-active' };
+        const typeColor = {
+            Appreciation: '#00e676', 'Trial Converted': '#00e676', 'Emergency Response Feedback': '#ff9800',
+            'RSA Feedback': '#00c6ff', 'Rapid Response Feedback': '#00c6ff',
+            Complaint: '#ff3d57', 'Service Issue': '#ff6b6b', 'Trial Failed': '#607b96', 'Unit Closed': '#607b96',
+            'Payment Issue': '#FFD700', 'Payment Hold': '#ff9800', 'Payment Received': '#00e676',
+        };
+        tbody.innerHTML = [...fb].reverse().map(x => `
+            <tr>
+                <td class="td-muted">${fmtDate(x.date)}</td>
+                <td class="td-id">${x.unitId || '—'}</td>
+                <td class="td-beat">${x.beat || '—'}</td>
+                <td style="color:${typeColor[x.feedbackType]||'var(--text)'};font-weight:600;font-size:0.62rem;">${x.feedbackType}</td>
+                <td class="td-muted">${x.responsibility || '—'}</td>
+                <td><span class="status-badge ${sc[x.status] || 'sb-pending'}">${x.status || '—'}</span></td>
+                <td class="td-muted">${x.updatedBy || '—'}</td>
+                <td class="td-muted" style="max-width:200px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${x.remark || '—'}</td>
+                <td><div class="td-actions">
+                    <button class="btn-danger" onclick="deleteFeedback(${x.id})">DEL</button>
+                </div></td>
+            </tr>`).join('');
+    }
+    function renderFeedbackStats() {
+        const fb = load(K_FEEDBACK);
+        document.getElementById('fe-total').textContent    = fb.length;
+        document.getElementById('fe-open').textContent     = fb.filter(x => x.status === 'Open').length;
+        document.getElementById('fe-pending').textContent  = fb.filter(x => x.status === 'Pending').length;
+        document.getElementById('fe-resolved').textContent = fb.filter(x => x.status === 'Resolved').length;
+        document.getElementById('fe-app').textContent      = fb.filter(x => x.feedbackType === 'Appreciation').length;
+        document.getElementById('fe-cmp').textContent      = fb.filter(x => x.feedbackType === 'Complaint').length;
+    }
+    function deleteFeedback(id) {
+        if (!confirm('Delete this feedback entry?')) return;
+        save(K_FEEDBACK, load(K_FEEDBACK).filter(x => x.id !== id));
+        renderFeedback(); renderFeedbackStats();
+    }
+    function clearFEFilters() {
+        ['fe-filter-type','fe-filter-status','fe-filter-beat'].forEach(id => document.getElementById(id).value = '');
+        renderFeedback();
+    }
+
+    // ── TOP BAR STATS ──
+    function updateTopBarStats() {
+        const u = load(K_UNITS);
+        const t = u.length || 7240;
+        const a = u.filter(x => x.status === 'Active').length || 6810;
+        const tr= u.filter(x => x.status === 'Trial').length  || 215;
+        const c = u.filter(x => x.status === 'Closed').length || 215;
+        document.getElementById('stat-total').textContent  = t.toLocaleString();
+        document.getElementById('stat-active').textContent = a.toLocaleString();
+        document.getElementById('stat-trial').textContent  = tr;
+        document.getElementById('stat-closed').textContent = c;
+        document.getElementById('hud-total').textContent   = t.toLocaleString();
+        document.getElementById('hud-active').textContent  = a.toLocaleString();
+        document.getElementById('hud-trial').textContent   = tr;
+        document.getElementById('hud-closed').textContent  = c;
+    }
+
+    // ── REMARK ENGINE ──
+    const counterRules = {
+        'Appreciation':                'APP+1 → Officer Positive+1 → Beat Positive+1',
+        'Emergency Response Feedback': 'APP+1 (Emergency) → QRT Positive+1 → Beat Positive+1 → RRT+1',
+        'RSA Feedback':                'RSA+1 → QRT Positive+1 → Beat Positive+1',
+        'Rapid Response Feedback':     'RRT+1 → QRT Positive+1 → Beat Positive+1',
+        'Trial Converted':             'AU+1 → MKT Positive+1 → Beat Positive+1',
+        'Complaint':                   'CMP+1 → Beat Complaint+1 → Responsible Team+1',
+        'Service Issue':               'ISS+1 → Beat Complaint+1 → Responsible Team+1',
+        'Payment Issue':               'PAY+1 → ACC+1 → Beat Negative+1',
+        'Payment Hold':                'PH+1 → CLI+1',
+        'Payment Received':            'PV+1 → ACC Positive+1',
+        'Trial Failed':                'UC+1 → MKT+1 → Beat Negative+1',
+        'Unit Closed':                 'UC+1 → Root Cause+1 → [Payment/Service/Complaint/Client/Business/Trial]',
     };
+    document.getElementById('re-type').addEventListener('change', function () {
+        const el = document.getElementById('re-preview');
+        el.textContent = this.value ? '→ AUTO UPDATE: ' + (counterRules[this.value] || '') : '';
+        el.className   = 'counter-preview' + (this.value ? ' on' : '');
+    });
 
     function submitRemark() {
-        const type   = document.getElementById('feedback-type').value;
-        const resp   = document.getElementById('resp-select').value;
-        const status = document.getElementById('status-select').value;
-        const beat   = document.getElementById('beat-select').value;
-        const note   = document.getElementById('remark-text').value;
+        const unitId = document.getElementById('re-unit').value;
+        const type   = document.getElementById('re-type').value;
+        const resp   = document.getElementById('re-resp').value;
+        const status = document.getElementById('re-status').value;
+        const date   = document.getElementById('re-date').value || today();
+        const by     = document.getElementById('re-by').value.trim();
+        const remark = document.getElementById('re-remark').value.trim();
 
         if (!type) { alert('Please select a Feedback Type.'); return; }
 
-        const time = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false });
-        const tc   = typeClass[type] || '';
-        const sc   = statusClass[status] || 'status-pending';
+        const units  = load(K_UNITS);
+        const unit   = units.find(u => u.unitId === unitId);
+        const beat   = unit ? unit.beat : '';
 
+        const fb  = load(K_FEEDBACK);
+        const entry = { id: Date.now(), unitId, beat, feedbackType: type, responsibility: resp, status, date, updatedBy: by, remark };
+        fb.push(entry);
+        save(K_FEEDBACK, fb);
+
+        // Add to activity feed
+        const time = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const typeClass = {
+            'Appreciation':'t-appreciation','Emergency Response Feedback':'t-emergency',
+            'RSA Feedback':'t-rsa','Rapid Response Feedback':'t-rsa','Trial Converted':'t-trial',
+            'Complaint':'t-complaint','Service Issue':'t-service',
+            'Payment Issue':'t-payment','Payment Hold':'t-payment','Payment Received':'t-payment',
+            'Trial Failed':'t-closed','Unit Closed':'t-closed',
+        }[type] || '';
+        const sc = { Open:'s-open', Pending:'s-pending', Resolved:'s-resolved', Closed:'s-closed' }[status] || 's-pending';
         const item = document.createElement('div');
         item.className = 'feed-item';
         item.style.background = 'rgba(0,198,255,0.06)';
         item.innerHTML = `
             <span class="f-time">${time}</span>
-            <span class="f-beat">${beat || 'NEW'}</span>
-            <span class="f-type ${tc}">${type}</span>
+            <span class="f-unit">${unitId || 'NEW'}</span>
+            <span class="f-beat">${beat || '—'}</span>
+            <span class="${typeClass}">${type}</span>
             <span class="f-resp">${resp ? resp.toUpperCase().slice(0,3) : '—'}</span>
-            <span class="f-note">${note || '—'}</span>
+            <span class="f-note">${remark || '—'}</span>
             <span class="f-status ${sc}">${status || 'LOGGED'}</span>`;
-
         const feed = document.getElementById('feed-list');
         feed.insertBefore(item, feed.firstChild);
 
-        // Reset form
-        ['feedback-type','resp-select','status-select','beat-select'].forEach(id => {
-            document.getElementById(id).value = '';
-        });
-        document.getElementById('remark-text').value = '';
-        const el = document.getElementById('counter-preview');
-        el.textContent = '';
-        el.className = 'counter-preview';
+        // Reset
+        ['re-unit','re-type','re-resp','re-status'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('re-remark').value = '';
+        document.getElementById('re-by').value     = '';
+        document.getElementById('re-date').value   = today();
+        document.getElementById('re-preview').textContent = '';
+        document.getElementById('re-preview').className  = 'counter-preview';
     }
+
+    // ── EXPORTS ──
+    function csvDownload(rows, filename) {
+        const csv  = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a'); a.href = url; a.download = filename; a.click();
+        URL.revokeObjectURL(url);
+    }
+    function exportUnitsCSV() {
+        const u = load(K_UNITS);
+        if (!u.length) { alert('No data.'); return; }
+        csvDownload([
+            ['Unit ID','Site Name','Client Name','Beat','QRT Officer','Field Exec','Subscription','Status'],
+            ...u.map(x => [x.unitId, x.siteName, x.clientName, x.beat, x.qrtOfficer, x.fieldExec, x.subscriptionType, x.status])
+        ], 'TOPS_UNIT_MASTER_' + today() + '.csv');
+    }
+    function exportPaymentsCSV() {
+        const p = load(K_PAYMENTS);
+        if (!p.length) { alert('No data.'); return; }
+        csvDownload([
+            ['Unit ID','Client','Beat','Billing Cycle','Current Bill','Outstanding','Status','Last Payment','Next Followup'],
+            ...p.map(x => [x.unitId, x.clientName, x.beat, x.billingCycle, x.currentBill, x.outstanding, x.paymentStatus, x.lastPaymentDate, x.nextFollowup])
+        ], 'TOPS_PAYMENT_MASTER_' + today() + '.csv');
+    }
+    function exportFeedbackCSV() {
+        const fb = load(K_FEEDBACK);
+        if (!fb.length) { alert('No data.'); return; }
+        csvDownload([
+            ['Date','Unit ID','Beat','Feedback Type','Responsibility','Status','Updated By','Remark'],
+            ...fb.map(x => [x.date, x.unitId, x.beat, x.feedbackType, x.responsibility, x.status, x.updatedBy, x.remark])
+        ], 'TOPS_FEEDBACK_ENGINE_' + today() + '.csv');
+    }
+
+    // ── INIT ──
+    function init() {
+        populateUnitSelects();
+        updateTopBarStats();
+    }
+    init();
 </script>
 </body>
 </html>
