@@ -20,16 +20,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const buttons = document.querySelectorAll('.btn');
     const projects = document.querySelectorAll('.port-box');
 
+    const allBtn = document.querySelector('.btn[data-filter="all"]');
+    if (allBtn) allBtn.classList.add('active');
+
     buttons.forEach(button => {
         button.addEventListener('click', function() {
             const filterValue = this.getAttribute('data-filter');
 
-            // Hide all projects
+            buttons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
             projects.forEach(project => {
                 project.style.display = 'none';
             });
 
-            // Show projects based on the selected filter
             if (filterValue === 'all') {
                 projects.forEach(project => {
                     project.style.display = 'block';
