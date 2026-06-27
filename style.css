@@ -706,7 +706,8 @@ footer a {
     color: var(--btn-color);
 }
 
-.fillter-buttons .btn:hover{
+.fillter-buttons .btn:hover,
+.fillter-buttons .btn.active{
     color: var(--hover-color)
 }
 
