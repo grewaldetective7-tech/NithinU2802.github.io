@@ -13,7 +13,7 @@ A notification banner at the top of `index.html` points visitors to a newer port
 ```
 NithinU2802.github.io/
 ├── index.html          # Main single-page portfolio (376 lines)
-├── style.css           # All styles (843 lines)
+├── style.css           # All styles (842 lines)
 ├── script.js           # All JavaScript (63 lines)
 ├── thankyou.html       # Contact form redirect page
 ├── CLAUDE.md           # This file
